@@ -11,7 +11,7 @@ const emitter = new Emitter();
 class Store {
   constructor() {
     this.store = {
-      account: {},
+      account: null,
     };
 
     dispatcher.register(
@@ -39,6 +39,7 @@ class Store {
       window.web3 = new Web3(window.web3.currentProvider);
     } else {
       window.alert("Non-Eth browser detected");
+      return;
     }
     const web3 = window.web3;
     const accounts = await web3.eth.getAccounts();

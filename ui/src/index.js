@@ -17,7 +17,7 @@ import Header from "components/header.js";
 import Home from "views/Home.js";
 import About from "views/About.js";
 // import Market from "views/Market.js";
-// import NftAuction from "views/NftAuction";
+import NftDetail from "views/NftDetail.js";
 
 import Store from "./stores/store";
 const store = Store.store;
@@ -27,7 +27,7 @@ const dispatcher = Store.dispatcher;
 function App() {
   useEffect(() => {
     // Some initialization logic here
-    // dispatcher.dispatch({ type: "CONFIGURE", content: {} });
+    dispatcher.dispatch({ type: "CONFIGURE", content: {} });
   }, []);
 
   return (
@@ -41,9 +41,9 @@ function App() {
           <Route path="/about">
             <About />
           </Route>
-          {/* <Route path="/nft/:id">
-            <NftAuction />
-          </Route> */}
+          <Route path="/nft/:id">
+            <NftDetail />
+          </Route>
         </Switch>
       </div>
     </Router>
