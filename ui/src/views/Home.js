@@ -8,34 +8,14 @@ import {
   useRouteMatch,
 } from "react-router-dom";
 
-import Store from "../stores/store";
-const store = Store.store;
-const emitter = Store.emitter;
-const dispatcher = Store.dispatcher;
+import Marketplace from "./Marketplace";
 
 export default function Home() {
   let { path, url } = useRouteMatch();
 
   return (
     <>
-      <ul>
-        <li>
-          <Link to={`topic/foo`}>Foo</Link>
-        </li>
-        <li>
-          <Link to={`topic/bar`}>Bar</Link>
-        </li>
-        <li>
-          <Link to={`topic/baz`}>Baz</Link>
-        </li>
-      </ul>
-      {/* <Header /> */}
-      <Switch>
-        <Route exact path={path}>
-          <h3>Please select a topic.</h3>
-        </Route>
-      </Switch>
-      {/* <Footer /> */}
+      <Marketplace />
     </>
   );
 }
