@@ -12,6 +12,7 @@ contract LocationNFT is ERC721, Ownable {
 
 	struct Location {
 		string location_name; //0-255
+		string svg_image;
 		uint8 locn_type;
 		uint256 latitude;
 		uint256 longitude;
@@ -74,9 +75,9 @@ contract LocationNFT is ERC721, Ownable {
 		return _biddingLogs[bidId];
 	}
 
-	function mint(string memory location_name, uint8 locn_type, uint256 latitude, uint256 longitude, bool isSellable) public onlyOwner {
+	function mint(string memory location_name, string memory svg_image, uint8 locn_type, uint256 latitude, uint256 longitude, bool isSellable) public onlyOwner {
 	    require(!_locationNames[location_name].isExist, "Location already minted");
-		_locationDetails[nextId] = Location(location_name, locn_type, latitude, longitude, true);
+		_locationDetails[nextId] = Location(location_name, svg_image, locn_type, latitude, longitude, true);
 		_locationNames[location_name] = LocationName(location_name, true);
 		if (isSellable) {
 			tokenIdToPrice[nextId] = 10000000000000000; //2000 wei

@@ -28,9 +28,12 @@ export default function Marketplace() {
         let price = await contract.methods.getPriceOf(i).call();
         // console.log(window.web3.utils.fromWei(price));
         price = window.web3.utils.fromWei(price);
+        let svg_uri = "data:image/svg+xml;utf8," + nft.svg_image;
         let nftObj = {
           tokenId: i,
           name: nft.location_name,
+          svg_image: nft.svg_image,
+          svg_uri: svg_uri,
           price: price,
         };
         tmpList.push(nftObj);
@@ -41,6 +44,10 @@ export default function Marketplace() {
 
   const init = async () => {
     console.log("init marketplace");
+    const storeUpdated = async () => {
+      downloadNfts();
+    };
+    emitter.on("StoreUpdated", storeUpdated);
     downloadNfts();
   };
 
@@ -63,7 +70,7 @@ export default function Marketplace() {
   />
 </svg>`;
 
-  const getSvgUri = () => {
+  const getTestSvgUri = () => {
     return "data:image/svg+xml;utf8," + sample;
   };
 
@@ -149,7 +156,7 @@ export default function Marketplace() {
                     onClick={() => routeToDetail(nft.tokenId)}
                   >
                     <div class="relative w-full p-1 flex justify-center">
-                      <img src={getSvgUri()} width="100px" height="100px"></img>
+                      <img src={nft.svg_uri} width="100px" height="100px"></img>
                     </div>
                     <div class="p-2 font-semibold">{nft.name}</div>
                     <div class="mb-1 font-semibold">{nft.price} ETH</div>
