@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
 
 import "./styles/output.css";
+import "./styles/custom.css";
 
 import {
   BrowserRouter as Router,
