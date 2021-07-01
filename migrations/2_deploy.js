@@ -5,7 +5,7 @@ const { getAddress } = require("@harmony-js/crypto");
 const web3 = require("web3");
 const fs = require("fs");
 
-const svg_sample = fs.readFileSync("../assets/heart.svg", "utf8");
+const svg_sample = fs.readFileSync("../assets/dog.svg", "utf8");
 
 module.exports = async function (deployer, network, accounts) {
   //   console.log(svg_sample);

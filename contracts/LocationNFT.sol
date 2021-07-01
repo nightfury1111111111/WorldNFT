@@ -107,8 +107,11 @@ contract LocationNFT is ERC721, Ownable {
 	function startAuction(uint256 _tokenId, uint _biddingTime) external {
 	    uint auctionEndTime = block.timestamp + _biddingTime;
 	    require(_locationDetails[_tokenId].isExist, "Token doesn't exist");
-	    require(!_auctions[_tokenId].isExist, "Auction already started");
+	    // require(!_auctions[_tokenId].isExist, "Auction already started");
 	    require(msg.sender == ownerOf(_tokenId), "Cannot start auction for token you don't own");
+		if(_auctions[_tokenId].isExist && !_auctions[_tokenId].auctionEnded) {
+			revert ("The auction has not ended yet");
+		}
 	    _auctions[_tokenId] = Auction(_tokenId,msg.sender,true,false,auctionEndTime,_biddingTime,address(0x0),0,true);
 		emit AuctionStarted(msg.sender, _biddingTime);
 	}
