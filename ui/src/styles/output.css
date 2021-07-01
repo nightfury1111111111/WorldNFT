@@ -29390,10 +29390,6 @@ video {
   --tw-drop-shadow: drop-shadow(0 0 #0000);
 }
 
-.dropdown:hover .dropdown-menu {
-	display: block;
-  }
-
 .grayscale-0 {
   --tw-grayscale: grayscale(0);
 }

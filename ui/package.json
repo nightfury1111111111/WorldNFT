@@ -33,10 +33,11 @@
   },
   "scripts": {
     "start": "npm run watch:css && react-scripts start",
-    "build": "react-scripts build && gulp licenses",
+    "build": "CI=false && npm run build:css && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "watch:css": "postcss src/styles/tailwind.css -o src/styles/output.css",
+    "build:css": "postcss src/styles/tailwind.css -o src/styles/output.css",
     "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm run build:tailwind && npm start",
     "build:tailwind": "tailwind build src/assets/styles/index.css -o src/assets/styles/tailwind.css"
   },
