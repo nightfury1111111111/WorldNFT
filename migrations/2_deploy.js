@@ -1,4 +1,5 @@
 const WorldToken = artifacts.require("WorldToken");
+const IterableMapping = artifacts.require("IterableMapping");
 const LocationNFT = artifacts.require("LocationNFT");
 
 const { getAddress } = require("@harmony-js/crypto");
@@ -14,7 +15,9 @@ const svg_melbourne = fs.readFileSync("../assets/melbourne.svg", "utf8");
 module.exports = async function (deployer, network, accounts) {
   //   console.log(svg_sample);
   await deployer.deploy(WorldToken);
-  await deployer.deploy(LocationNFT);
+  await deployer.deploy(IterableMapping);
+  await deployer.link(IterableMapping, LocationNFT);
+  await deployer.deploy(LocationNFT, { gas: 10000000 });
   let nftInstance = await LocationNFT.deployed();
   await nftInstance.mint("New York", svg_ny, 0, 40, 74, true);
   await nftInstance.mint("London", svg_london, 0, 23, 22, true);

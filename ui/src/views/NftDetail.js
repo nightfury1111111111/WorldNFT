@@ -211,6 +211,9 @@ export default function NftDetail() {
       setLoading(false);
       refreshContractData();
     });
+    contract.events.BidRejected({}, async (err, event) => {
+      console.log("BidRejected ", event.returnValues);
+    });
   };
 
   useEffect(() => {

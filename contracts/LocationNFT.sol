@@ -5,7 +5,61 @@ pragma experimental ABIEncoderV2;
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
+library IterableMapping {
+    // Iterable mapping from address to uint;
+    struct Map {
+        address[] keys;
+        mapping(address => uint) values;
+        mapping(address => uint) indexOf;
+        mapping(address => bool) inserted;
+    }
+
+    function get(Map storage map, address key) public view returns (uint) {
+        return map.values[key];
+    }
+
+    function getKeyAtIndex(Map storage map, uint index) public view returns (address) {
+        return map.keys[index];
+    }
+
+    function size(Map storage map) public view returns (uint) {
+        return map.keys.length;
+    }
+
+    function set(Map storage map, address key, uint val) public {
+        if (map.inserted[key]) {
+            map.values[key] = val;
+        } else {
+            map.inserted[key] = true;
+            map.values[key] = val;
+            map.indexOf[key] = map.keys.length;
+            map.keys.push(key);
+        }
+    }
+
+    function remove(Map storage map, address key) public {
+        if (!map.inserted[key]) {
+            return;
+        }
+
+        delete map.inserted[key];
+        delete map.values[key];
+
+        uint index = map.indexOf[key];
+        uint lastIndex = map.keys.length - 1;
+        address lastKey = map.keys[lastIndex];
+
+        map.indexOf[lastKey] = index;
+        delete map.indexOf[key];
+
+        map.keys[index] = lastKey;
+        map.keys.pop();
+    }
+}
+
 contract LocationNFT is ERC721, Ownable {
+	using IterableMapping for IterableMapping.Map;
+
 	constructor() ERC721("UniqueAsset", "UNA") public {
 
 	}
@@ -47,13 +101,18 @@ contract LocationNFT is ERC721, Ownable {
 	event AuctionStarted(address ownerAddress, uint _biddingTime);
 	event BidIncrease(address bidAddress, uint256 bidValue);
 	event AuctionEnded(address bidAddress, uint256 bidValue);
+	event BidRejected(address bidAddress, uint256 bidValue);
 
 	mapping(uint256 => Location) private _locationDetails;
 	mapping(string => LocationName) private _locationNames;
 	mapping(uint256 => uint256) public tokenIdToPrice;
 	mapping(uint256 => Auction) private _auctions;
-	mapping(address => uint) private _pendingReturns;
+	// mapping(address => uint) private _pendingReturns;
 	mapping(uint256 => Bid) private _biddingLogs;
+
+	// IterableMapping.Map private _pendingReturns;
+	mapping(uint256 => IterableMapping.Map) private _tokenPendingReturns;
+
 	
 	function getTokenDetails(uint256 tokenId) public view returns (Location memory) {
 		return _locationDetails[tokenId];
@@ -73,6 +132,16 @@ contract LocationNFT is ERC721, Ownable {
 
 	function getBiddingLog(uint256 bidId) public view returns(Bid memory) {
 		return _biddingLogs[bidId];
+	}
+
+	function getPendingReturnsCount(uint tokenId) public view returns(uint) {
+	    IterableMapping.Map storage pendingReturnForIdx = _tokenPendingReturns[tokenId];
+		return pendingReturnForIdx.size();
+	}
+
+	function getPendingReturnValue(uint tokenId, address addr) public view returns(uint) {
+	    IterableMapping.Map storage pendingReturnForIdx = _tokenPendingReturns[tokenId];
+	    return pendingReturnForIdx.get(addr);
 	}
 
 	function mint(string memory location_name, string memory svg_image, uint8 locn_type, uint256 latitude, uint256 longitude, bool isSellable) public onlyOwner {
@@ -125,6 +194,7 @@ contract LocationNFT is ERC721, Ownable {
 	    if(auc.auctionEnded) {
 	        revert ("The auction has ended");
 	    }
+		IterableMapping.Map storage pr = _tokenPendingReturns[_tokenId];
 		if(auc.highestBid == 0) {
 			auc.auctionEnded = true;
 	    	auc.auctionGoingOn = false;
@@ -138,7 +208,17 @@ contract LocationNFT is ERC721, Ownable {
 			auc.beneficiary = auc.highestBidder;
 			_auctions[_tokenId] = auc;
 			tokenIdToPrice[_tokenId] = auc.highestBid;
+			pr.set(auc.highestBidder, 0);
 			emit AuctionEnded(auc.highestBidder, auc.highestBid);
+		}
+		
+		for (uint i = 0; i < pr.size(); i++) {
+			address returnAddr = pr.getKeyAtIndex(i);
+			uint returnVal = getPendingReturnValue(_tokenId, returnAddr);
+			if(returnVal > 0) {
+				payable(returnAddr).transfer(returnVal);
+				emit BidRejected(returnAddr, returnVal);
+			}
 		}
 	}
 	
@@ -152,7 +232,10 @@ contract LocationNFT is ERC721, Ownable {
 	    auc.highestBid = msg.value;
 	    auc.highestBidder = msg.sender;
 	    _auctions[_tokenId] = auc;
-	    _pendingReturns[msg.sender] += msg.value;
+	    // _pendingReturns[msg.sender] += msg.value;
+		// _pendingReturns.set(msg.sender, msg.value);
+		IterableMapping.Map storage pr = _tokenPendingReturns[_tokenId];
+        pr.set(msg.sender, msg.value);
 	    emit BidIncrease(msg.sender, msg.value);
 
 		//Log bid into bidHistory

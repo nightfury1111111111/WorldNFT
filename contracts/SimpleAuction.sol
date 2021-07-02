@@ -1,4 +1,4 @@
-// "Ny","0","22","22",true
+// "NY", "svg","0","22","22",true
 
 
 // pragma solidity =0.6.12;
