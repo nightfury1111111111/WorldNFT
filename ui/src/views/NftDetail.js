@@ -46,7 +46,6 @@ export default function NftDetail() {
     let owner_fmt = getCompressed(owner);
     let price = await contract.methods.getPriceOf(id).call();
     price = window.web3.utils.fromWei(price);
-    let svg_uri = "data:image/svg+xml;utf8," + nft.svg_image;
     const isNftOwned = owner == store.getStore().account ? true : false;
     let auctionObj = await contract.methods.getAuctionInfo(id).call();
     let locn_nft = {
@@ -55,7 +54,6 @@ export default function NftDetail() {
       owner: owner,
       owner_fmt: owner_fmt,
       svg_image: nft.svg_image,
-      svg_uri: svg_uri,
       price: price,
       isNftOwned: isNftOwned,
       hasAuctionStarted: auctionObj.isExist,
@@ -504,11 +502,11 @@ export default function NftDetail() {
           {nftObj && (
             <div class="p-6 flex flex-row justify-center">
               <div class="bg-purple-400 flex flex-col items-center justify-center rounded-lg cursor-pointer hover:shadow-md hover:bg-purple-300 h-full w-1/3">
-                (
                 <div class="relative w-full p-1 flex justify-center">
-                  <img src={nftObj.svg_uri} width="100px" height="100px"></img>
+                  <div
+                    dangerouslySetInnerHTML={{ __html: nftObj.svg_image }}
+                  ></div>
                 </div>
-                )
               </div>
               <div class="bg-gray-400 w-2/3 p-2 m-2">
                 <div class="bg-pink-300 rounded p-2">
