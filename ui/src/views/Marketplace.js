@@ -1,4 +1,14 @@
 import React, { useState, useEffect, useSelector, useContext } from "react";
+import {
+  Units,
+  Unit,
+  numberToString,
+  add0xToString,
+  fromWei,
+  toWei,
+  numToStr,
+} from "@harmony-js/utils";
+import { BN } from "@harmony-js/crypto";
 
 import { useHistory } from "react-router-dom";
 
@@ -15,6 +25,23 @@ export default function Marketplace() {
   useEffect(() => {
     console.log(nftList);
   }, [nftList]);
+
+  const downloadData = async () => {
+    let contract = store.getStore().dapp_contract;
+    if (contract) {
+      //   console.log(contract);
+      const value = await contract.methods.getMoneyStored().call();
+      console.log("value ", Number(value));
+      const one = new BN("1");
+      let options = {
+        gasPrice: 1000000000,
+        gasLimit: 210000,
+        value: toWei(one, Units.one),
+      };
+      const increment = await contract.methods.addMoney().send(options);
+      console.log("increment ", increment);
+    }
+  };
 
   const downloadNfts = async () => {
     let contract = store.getStore().dapp_contract;
@@ -45,10 +72,12 @@ export default function Marketplace() {
   const init = async () => {
     console.log("init marketplace");
     const storeUpdated = async () => {
-      downloadNfts();
+      //   downloadNfts();
+      downloadData();
     };
     emitter.on("StoreUpdated", storeUpdated);
-    downloadNfts();
+    // downloadNfts();
+    downloadData();
   };
 
   useEffect(() => {

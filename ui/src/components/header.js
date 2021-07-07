@@ -35,8 +35,8 @@ class Header extends Component {
         this.setState({ accountFmt: this.getCompressed(accountAddress) });
         let contract = store.getStore().dapp_contract;
         if (contract) {
-          var balance = await contract.methods.balanceOf(accountAddress).call();
-          console.log("bal ", balance);
+          //   var balance = await contract.methods.balanceOf(accountAddress).call();
+          //   console.log("bal ", balance);
         }
       }
     };
