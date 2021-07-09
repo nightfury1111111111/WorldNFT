@@ -29,17 +29,18 @@ export default function Marketplace() {
   const downloadData = async () => {
     let contract = store.getStore().dapp_contract;
     if (contract) {
-      //   console.log(contract);
-      const value = await contract.methods.getMoneyStored().call();
-      console.log("value ", Number(value));
-      const one = new BN("1");
-      let options = {
-        gasPrice: 1000000000,
-        gasLimit: 210000,
-        value: toWei(one, Units.one),
-      };
-      const increment = await contract.methods.addMoney().send(options);
-      console.log("increment ", increment);
+      console.log(contract);
+      //   const value = await contract.methods.getMoneyStored().call();
+      //   console.log("value ", Number(value));
+      //   const one = new BN("1");
+      //   let options = {
+      //     from: store.getStore().account,
+      //     gasPrice: 1000000000,
+      //     gasLimit: 210000,
+      //     value: toWei(one, Units.one),
+      //   };
+      //   const increment = await contract.methods.addMoney().send(options);
+      //   console.log("increment ", increment);
     }
   };
 
@@ -52,16 +53,20 @@ export default function Marketplace() {
       for (var i = 0; i < nftCount; i++) {
         const nft = await contract.methods.getTokenDetails(i).call();
         // console.log(nft);
+        const owner = await contract.methods.getOwnerOf(i).call();
+        const isNftOwned = owner == store.getStore().account ? true : false;
+
         let price = await contract.methods.getPriceOf(i).call();
-        // console.log(window.web3.utils.fromWei(price));
-        price = window.web3.utils.fromWei(price);
-        let svg_uri = "data:image/svg+xml;utf8," + nft.svg_image;
+        //For ETH
+        // price = window.web3.utils.fromWei(price);
+        //For ONE
+        price = fromWei(price, Units.one);
         let nftObj = {
           tokenId: i,
           name: nft.location_name,
           svg_image: nft.svg_image,
-          svg_uri: svg_uri,
           price: price,
+          isNftOwned: isNftOwned,
         };
         tmpList.push(nftObj);
       }
@@ -72,8 +77,8 @@ export default function Marketplace() {
   const init = async () => {
     console.log("init marketplace");
     const storeUpdated = async () => {
-      //   downloadNfts();
-      downloadData();
+      downloadNfts();
+      //   downloadData();
     };
     emitter.on("StoreUpdated", storeUpdated);
     // downloadNfts();
@@ -174,6 +179,9 @@ export default function Marketplace() {
                     class="bg-purple-400 w-full flex flex-col items-center justify-center rounded-lg cursor-pointer hover:shadow-md hover:bg-purple-300 h-full"
                     onClick={() => routeToDetail(nft.tokenId)}
                   >
+                    {nft.isNftOwned && (
+                      <div class="p-2 font-semibold">Owned</div>
+                    )}
                     <div class="relative w-full p-1 flex justify-center">
                       <div
                         dangerouslySetInnerHTML={{ __html: nft.svg_image }}
@@ -185,7 +193,7 @@ export default function Marketplace() {
                       ></img> */}
                     </div>
                     <div class="p-2 font-semibold">{nft.name}</div>
-                    <div class="mb-1 font-semibold">{nft.price} ETH</div>
+                    <div class="mb-1 font-semibold">{nft.price} ONE</div>
                   </div>
                 );
               })}

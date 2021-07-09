@@ -7,6 +7,7 @@
     "@harmony-js/core": "^0.1.55",
     "@openzeppelin/contracts": "^3.2.0",
     "@truffle/hdwallet-provider": "^1.4.0",
+    "bn.js": "^5.2.0",
     "dotenv": "^8.2.0",
     "ethereum-waffle": "^3.2.0",
     "solc": "0.6.12",

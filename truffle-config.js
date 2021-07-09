@@ -8,7 +8,7 @@ var HDWalletProvider = require("truffle-hdwallet-provider");
 
 module.exports = {
   networks: {
-    testnet: {
+    harmony_testnet: {
       network_id: "2",
       provider: () => {
         const truffleProvider = new TruffleProvider(
@@ -23,6 +23,7 @@ module.exports = {
         truffleProvider.setSigner(newAcc);
         return truffleProvider;
       },
+      skipDryRun: true,
     },
     rinkeby: {
       host: "localhost",

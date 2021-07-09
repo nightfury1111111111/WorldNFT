@@ -6,6 +6,15 @@ import {
   useParams,
   useRouteMatch,
 } from "react-router-dom";
+import {
+  Units,
+  Unit,
+  numberToString,
+  add0xToString,
+  fromWei,
+  toWei,
+  numToStr,
+} from "@harmony-js/utils";
 import { compareAsc, format } from "date-fns";
 import * as common from "../utils/common";
 
@@ -26,8 +35,10 @@ export default function NftDetail() {
   const [timerEnded, setTimerEnded] = useState(false);
 
   const selectedBidTimes = [
-    { name: "1 minute", value: 60 },
-    { name: "10 minutes", value: 600 },
+    { name: "5 mins", value: 60 * 5 },
+    { name: "10 mins", value: 60 * 10 },
+    { name: "30 mins", value: 60 * 30 },
+    { name: "1 hour", value: 60 * 60 },
   ];
 
   const getCompressed = (addr) => {
@@ -45,7 +56,11 @@ export default function NftDetail() {
     const owner = await contract.methods.getOwnerOf(id).call();
     let owner_fmt = getCompressed(owner);
     let price = await contract.methods.getPriceOf(id).call();
-    price = window.web3.utils.fromWei(price);
+    //For ETH
+    // price = window.web3.utils.fromWei(price);
+    //For ONE
+    price = fromWei(price, Units.one);
+
     const isNftOwned = owner == store.getStore().account ? true : false;
     let auctionObj = await contract.methods.getAuctionInfo(id).call();
     let locn_nft = {
@@ -149,7 +164,10 @@ export default function NftDetail() {
     // console.log("auctionData ", auctionData);
     let timer = secondsToTime(auctionData.biddingTime);
     // console.log("timer ", timer);
-    let highestBid = window.web3.utils.fromWei(auctionData.highestBid, "ether");
+    // for ETH
+    // let highestBid = window.web3.utils.fromWei(auctionData.highestBid, "ether");
+    //for ONE
+    let highestBid = fromWei(auctionData.highestBid, Units.one);
     let bidPlacedByCurr =
       auctionData.highestBidder == store.getStore().account ? true : false;
 
@@ -172,7 +190,7 @@ export default function NftDetail() {
   const refreshAuctionPanel = async (id) => {
     let auctionObj = await getAuctionDetailById(id);
     auctionObj = updateTimeRemaining(auctionObj);
-    auctionObj = await updateBidLogs(auctionObj);
+    // auctionObj = await updateBidLogs(auctionObj);
     setAuctionObj(auctionObj);
   };
 
@@ -206,14 +224,25 @@ export default function NftDetail() {
   // ~~~~~~~~~~~~~~~~~~~~~ Auction
   const listenContractEvents = () => {
     //listen to events
-    contract.events.BidIncrease({}, async (err, event) => {
-      console.log("BidIncrease ", event.returnValues);
-      setLoading(false);
-      refreshContractData();
-    });
-    contract.events.BidRejected({}, async (err, event) => {
-      console.log("BidRejected ", event.returnValues);
-    });
+    if (contract.events.AuctionStarted) {
+      contract.events.AuctionStarted({}, async (error, event) => {
+        console.log("AuctionStarted ", event);
+        setLoading(false);
+        refreshContractData();
+      });
+    }
+    if (contract.events.BidIncrease) {
+      contract.events.BidIncrease({}, async (err, event) => {
+        console.log("BidIncrease ", event.returnValues);
+        setLoading(false);
+        refreshContractData();
+      });
+    }
+    if (contract.events.BidRejected) {
+      contract.events.BidRejected({}, async (err, event) => {
+        console.log("BidRejected ", event.returnValues);
+      });
+    }
   };
 
   useEffect(() => {
@@ -287,20 +316,22 @@ export default function NftDetail() {
     console.log("startAuction ", bidTime);
     setLoading(true);
     if (contract) {
-      contract.methods
+      const result = await contract.methods
         .startAuction(nftObj.token_id, bidTime)
-        .send({ from: store.getStore().account, value: 0 })
-        .on("transactionHash", (hash) => {
-          contract.events.AuctionStarted({}, async (error, event) => {
-            console.log("AuctionStarted ", event.returnValues);
-            setLoading(false);
-            refreshContractData();
-          });
+        .send({
+          from: store.getStore().account,
+          value: 0,
+          gasPrice: 1000000000,
+          gasLimit: 210000,
         })
         .on("error", (error) => {
           window.alert("Error ", error);
           setLoading(false);
         });
+      console.log(`Send tx: ${result.transactionHash} result: `, result.status);
+      if (result.status) {
+        setLoading(false);
+      }
     }
   };
 
@@ -522,10 +553,16 @@ export default function NftDetail() {
                 <div class="bg-pink-100 rounded p-2 mt-2">
                   <div>Current Price</div>
                   <div class="mt-2 flex flex-row items-center">
-                    <img
+                    {/* <img
                       src="https://storage.opensea.io/files/6f8e2979d428180222796ff4a33ab929.svg"
                       size="24"
+                    ></img> */}
+                    <img
+                      src="https://gblobscdn.gitbook.com/orgs%2F-LiOowK9lXTPyPxhkAcr%2Favatar.png"
+                      width="48"
+                      height="48"
                     ></img>
+
                     <span class="px-2 text-4xl font-semibold">
                       {nftObj.price}
                     </span>

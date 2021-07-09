@@ -20,8 +20,7 @@
       "name": "addMoney",
       "outputs": [],
       "stateMutability": "payable",
-      "type": "function",
-      "payable": true
+      "type": "function"
     },
     {
       "inputs": [],
@@ -34,8 +33,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [],
@@ -48,8 +46,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     }
   ],
   "metadata": "{\"compiler\":{\"version\":\"0.6.12+commit.27d51765\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"addMoney\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"decrementCounter\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getCount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getMoneyStored\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"incrementCounter\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"/C/Users/swapp/Documents/MyProjects/Crypto/world_nft/contracts/Counter.sol\":\"Counter\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/C/Users/swapp/Documents/MyProjects/Crypto/world_nft/contracts/Counter.sol\":{\"keccak256\":\"0xdd86f424005ccd5830e5b34662caecd556c1eae0a38c8671a60755f46b0de5cd\",\"urls\":[\"bzz-raw://915007eb8a53cfd0211d5fe7e6182c766292c6cab9f8d375360fb9c684ecc2a3\",\"dweb:/ipfs/Qmau6rtTdCu386NYrVtCTCBhW237FADjp7nBHmTqcHMKNm\"]}},\"version\":1}",
@@ -1215,7 +1212,7 @@
     }
   },
   "schemaVersion": "3.2.3",
-  "updatedAt": "2021-07-06T06:22:56.811Z",
+  "updatedAt": "2021-07-09T07:55:57.896Z",
   "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",
