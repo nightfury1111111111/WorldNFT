@@ -3,6 +3,7 @@ import {
   Units,
   Unit,
   numberToString,
+  hexToNumber,
   add0xToString,
   fromWei,
   toWei,
@@ -47,20 +48,18 @@ export default function Marketplace() {
   const downloadNfts = async () => {
     let contract = store.getStore().dapp_contract;
     if (contract) {
-      var nftCount = await contract.methods.nextId().call();
+      let nftCount = await contract.methods.nextId().call();
+      console.log("nftCount", nftCount);
       setNftCount(nftCount);
       let tmpList = [];
       for (var i = 0; i < nftCount; i++) {
         const nft = await contract.methods.getTokenDetails(i).call();
-        // console.log(nft);
         const owner = await contract.methods.getOwnerOf(i).call();
-        const isNftOwned = owner == store.getStore().account ? true : false;
-
         let price = await contract.methods.getPriceOf(i).call();
         //For ETH
         // price = window.web3.utils.fromWei(price);
-        //For ONE
         price = fromWei(price, Units.one);
+        const isNftOwned = owner == store.getStore().account ? true : false;
         let nftObj = {
           tokenId: i,
           name: nft.location_name,

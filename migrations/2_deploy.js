@@ -17,12 +17,18 @@ const svg_melbourne = fs.readFileSync("../assets/melbourne.svg", "utf8");
 
 module.exports = async function (deployer, network, accounts) {
   //   await deployer.deploy(Counter);
-  //   await deployer.deploy(IterableMapping);
+  await deployer.deploy(IterableMapping);
   //   await deployer.link(IterableMapping, LocationNFT);
+  await deployer.link(IterableMapping, WorldNFT);
+
   // await deployer.deploy(LocationNFT, { gas: 10000000 });
   await deployer.deploy(WorldNFT, { gas: 10000000 });
   let nftInstance = await WorldNFT.deployed();
   await nftInstance.mint("New York", svg_ny);
+  await nftInstance.mint("London", svg_london);
+  await nftInstance.mint("Mumbai", svg_mumbai);
+  await nftInstance.mint("Cape Town", svg_cape);
+  await nftInstance.mint("Melbourne", svg_melbourne);
   //   await nftInstance.mint("New York", svg_ny, 0, 40, 74, true);
   //   await nftInstance.mint("London", svg_london, 0, 23, 22, true);
   //   await nftInstance.mint("Mumbai", svg_mumbai, 0, 87, 98, true);

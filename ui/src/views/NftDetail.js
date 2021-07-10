@@ -190,7 +190,7 @@ export default function NftDetail() {
   const refreshAuctionPanel = async (id) => {
     let auctionObj = await getAuctionDetailById(id);
     auctionObj = updateTimeRemaining(auctionObj);
-    // auctionObj = await updateBidLogs(auctionObj);
+    auctionObj = await updateBidLogs(auctionObj);
     setAuctionObj(auctionObj);
   };
 
@@ -208,7 +208,8 @@ export default function NftDetail() {
         logs.push({
           tokenId: bidLog.tokenId,
           bidder: bidLog.bidder,
-          value: window.web3.utils.fromWei(bidLog.bidValue),
+          //   value: window.web3.utils.fromWei(bidLog.bidValue),
+          value: fromWei(bidLog.bidValue, Units.one),
           timestamp: bidLog.timeBid,
           time_fmt: bidTime,
         });
@@ -275,8 +276,9 @@ export default function NftDetail() {
 
   const buyNft = async (nftObj) => {
     // console.log("buyNft ", nftObj);
-    let buyAmount = window.web3.utils.toWei("0.01", "Ether");
-    console.log("buyAmount ", buyAmount);
+    // let buyAmount = window.web3.utils.toWei("0.01", "Ether");
+    let buyAmount = toWei(nftObj.price, Units.one);
+    // console.log("buyAmount ", buyAmount);
     setLoading(true);
     if (contract) {
       contract.methods
@@ -360,8 +362,9 @@ export default function NftDetail() {
     console.log("placeBid");
     setLoading(true);
     if (contract) {
-      let bidAmount = window.web3.utils.toWei(bidPrice.toString(), "Ether");
-      //   console.log("bidAmount ", bidAmount);
+      //   let bidAmount = window.web3.utils.toWei(bidPrice.toString(), "Ether");
+      let bidAmount = toWei(bidPrice.toString(), Units.one);
+      console.log("bidAmount ", bidAmount);
       contract.methods
         .placeBid(nftObj.token_id)
         .send({ from: store.getStore().account, value: bidAmount })
