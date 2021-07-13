@@ -93,6 +93,7 @@ contract WorldNFT is ERC721, Ownable {
 	event BidIncrease(address bidAddress, uint256 bidValue);
 	event AuctionEnded(address bidAddress, uint256 bidValue);
 	event BidRejected(address bidAddress, uint256 bidValue);
+	event BidWithdrawn(address bidAddress, uint256 bidValue);
 
 	mapping(uint256 => Location) private _locationDetails;
 	mapping(uint256 => uint256) public tokenIdToPrice;
@@ -216,6 +217,40 @@ contract WorldNFT is ERC721, Ownable {
 		//Log bid into bidHistory
 		_biddingLogs[acceptedBidsIdx] = Bid(_tokenId, msg.sender, msg.value, block.timestamp);
 		acceptedBidsIdx++;
+	}
+
+	function withdrawBid(uint256 _tokenId) external payable {
+		Auction memory auc = getAuctionInfo(_tokenId);
+	    require(auc.isExist, "Auction doesn't exist");
+		IterableMapping.Map storage pr = _tokenPendingReturns[_tokenId];
+		uint nextHighestBid = 0;
+		for (uint i = 0; i < pr.size(); i++) {
+			address returnAddr = pr.getKeyAtIndex(i);
+			uint returnVal = getPendingReturnValue(_tokenId, returnAddr);
+			if(returnVal > 0) {
+				if(returnAddr == msg.sender) {
+					payable(returnAddr).transfer(returnVal);
+					pr.remove(returnAddr);
+					emit BidWithdrawn(returnAddr, returnVal);
+				} else {
+					if(nextHighestBid < returnVal) {
+						auc.highestBid = returnVal;
+	    				auc.highestBidder = returnAddr;
+						nextHighestBid = returnVal;
+					}
+				}
+			}
+		}
+		if(nextHighestBid == 0) {
+			auc.highestBid = 0;
+			auc.highestBidder = address(0);
+		}
+		//set highest bid as the next highest
+		_auctions[_tokenId] = auc;
+	}
+
+	function increaseBid(uint256 _tokenId) external payable {
+
 	}
 
 	function _beforeTokenTransfer(address from, address to, uint256 tokenId) internal override { 

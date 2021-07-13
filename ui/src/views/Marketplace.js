@@ -22,9 +22,11 @@ export default function Marketplace() {
   const route_history = useHistory();
   const [nftCount, setNftCount] = useState(0);
   const [nftList, setNftList] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    console.log(nftList);
+    // console.log(nftList);
+    setLoading(false);
   }, [nftList]);
 
   const downloadData = async () => {
@@ -74,14 +76,14 @@ export default function Marketplace() {
   };
 
   const init = async () => {
-    console.log("init marketplace");
+    setLoading(true);
     const storeUpdated = async () => {
       downloadNfts();
       //   downloadData();
     };
     emitter.on("StoreUpdated", storeUpdated);
-    // downloadNfts();
-    downloadData();
+    downloadNfts();
+    // downloadData();
   };
 
   useEffect(() => {
@@ -171,32 +173,36 @@ export default function Marketplace() {
         </header>
         <div class="main-content">
           <div class="w-full p-6">
-            <div class="grid grid-cols-3 gap-4">
-              {nftList.map((nft) => {
-                return (
-                  <div
-                    class="bg-purple-400 w-full flex flex-col items-center justify-center rounded-lg cursor-pointer hover:shadow-md hover:bg-purple-300 h-full"
-                    onClick={() => routeToDetail(nft.tokenId)}
-                  >
-                    {nft.isNftOwned && (
-                      <div class="p-2 font-semibold">Owned</div>
-                    )}
-                    <div class="relative w-full p-1 flex justify-center">
-                      <div
-                        dangerouslySetInnerHTML={{ __html: nft.svg_image }}
-                      ></div>
-                      {/* <img
+            {loading && <span>Loading ...</span>}
+            {!loading && (
+              <div class="grid grid-cols-3 gap-4">
+                {nftList.map((nft, idx) => {
+                  return (
+                    <div
+                      class="bg-purple-400 w-full flex flex-col items-center justify-center rounded-lg cursor-pointer hover:shadow-md hover:bg-purple-300 h-full"
+                      onClick={() => routeToDetail(nft.tokenId)}
+                      key={idx}
+                    >
+                      {nft.isNftOwned && (
+                        <div class="p-2 font-semibold">Owned</div>
+                      )}
+                      <div class="relative w-full p-1 flex justify-center">
+                        <div
+                          dangerouslySetInnerHTML={{ __html: nft.svg_image }}
+                        ></div>
+                        {/* <img
                         src={getTestSvgUri()}
                         width="100px"
                         height="100px"
                       ></img> */}
+                      </div>
+                      <div class="p-2 font-semibold">{nft.name}</div>
+                      <div class="mb-1 font-semibold">{nft.price} ONE</div>
                     </div>
-                    <div class="p-2 font-semibold">{nft.name}</div>
-                    <div class="mb-1 font-semibold">{nft.price} ONE</div>
-                  </div>
-                );
-              })}
-            </div>
+                  );
+                })}
+              </div>
+            )}
           </div>
         </div>
       </main>

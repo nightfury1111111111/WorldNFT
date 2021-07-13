@@ -244,6 +244,13 @@ export default function NftDetail() {
         console.log("BidRejected ", event.returnValues);
       });
     }
+    if (contract.events.BidWithdrawn) {
+      contract.events.BidWithdrawn({}, async (err, event) => {
+        console.log("BidWithdrawn ", event.returnValues);
+        setLoading(false);
+        refreshContractData();
+      });
+    }
   };
 
   useEffect(() => {
@@ -402,19 +409,17 @@ export default function NftDetail() {
     console.log("withdrawBid");
     setLoading(true);
     if (contract) {
-      //   let bidAmount = window.web3.utils.toWei(bidPrice.toString(), "Ether");
-      //   console.log("bidAmount ", bidAmount);
-      //   contract.methods
-      //     .placeBid(nftObj.token_id)
-      //     .send({ from: store.getStore().account, value: bidAmount })
-      //     .on("transactionHash", (hash) => {
-      //       console.log("placing bid ", hash);
-      //       setLoading(false);
-      //     })
-      //     .on("error", (error) => {
-      //       window.alert("Error ", error);
-      //       setLoading(false);
-      //     });
+      contract.methods
+        .withdrawBid(nftObj.token_id)
+        .send({ from: store.getStore().account, value: 0 })
+        .on("transactionHash", (hash) => {
+          console.log("withdrawing bid ", hash);
+          setLoading(false);
+        })
+        .on("error", (error) => {
+          window.alert("Error ", error);
+          setLoading(false);
+        });
     }
   };
 
