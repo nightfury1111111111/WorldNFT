@@ -16,6 +16,8 @@ import {
   numToStr,
 } from "@harmony-js/utils";
 import { compareAsc, format } from "date-fns";
+import { Iconly } from "react-iconly";
+
 import * as common from "../utils/common";
 
 import Store from "../stores/store";
@@ -537,156 +539,476 @@ export default function NftDetail() {
     </div>
   );
 
+  const styles = {
+    entryLabel: {
+      color: "#828282",
+      fontWeight: 600,
+      fontSize: "20px",
+    },
+    entryDesc: {
+      color: "#828282",
+      fontWeight: 400,
+      fontSize: "20px",
+      lineHeight: "20px",
+    },
+    sectionLabel: {
+      color: "#FF881B",
+      fontWeight: 600,
+      fontSize: "22px",
+      lineHeight: "20px",
+    },
+    auctionTimeNumber: {
+      color: "#828282",
+      fontWeight: 600,
+      fontSize: "24px",
+      lineHeight: "24px",
+    },
+    auctionTimeDesc: {
+      color: "#828282",
+      fontWeight: 600,
+      fontSize: "20px",
+    },
+    listEntry: {
+      color: "#000000",
+      fontWeight: 600,
+      fontSize: "16px",
+    },
+  };
   return (
-    <div class="">
-      <main class="main flex flex-col">
-        <div class="main-content">
-          {nftObj && (
-            <div class="p-6 flex flex-row justify-center">
-              <div class="bg-purple-400 flex flex-col items-center justify-center rounded-lg cursor-pointer hover:shadow-md hover:bg-purple-300 h-full w-1/3">
-                <div class="relative w-full p-1 flex justify-center">
+    <div className="flex flex-col justify-start" style={{ height: "90vh" }}>
+      <div className="m-2 mt-5 ml-4" style={{ height: "3%" }}>
+        <Link className="cursor-pointer" to={`/market`}>
+          <Iconly
+            name="ChevronLeftCircle"
+            set="two-tone"
+            primaryColor="black"
+            size="large"
+          />
+        </Link>
+      </div>
+      <div className="ml-8" style={{ height: "97%" }}>
+        <div className="" style={{ height: "45%" }}>
+          <div
+            className="ml-8 mr-8 mt-4 flex flex-row"
+            style={{ height: "100%" }}
+          >
+            <div className="" style={{ width: "40%" }}>
+              <div
+                className="flex justify-center items-center cursor-pointer rounded-lg"
+                style={{
+                  boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
+                  background:
+                    "radial-gradient(77.96% 81.64% at 50% 50%, #FFFFFF 0%, #FFCA0E 100%)",
+                  height: "100%",
+                }}
+              >
+                {nftObj && (
                   <div
                     dangerouslySetInnerHTML={{ __html: nftObj.svg_image }}
                   ></div>
-                </div>
-              </div>
-              <div class="bg-gray-400 w-2/3 p-2 m-2">
-                <div class="bg-pink-300 rounded p-2">
-                  <div>Token Id: {id}</div>
-                  <div class="font-extrabold text-lg">{nftObj.name}</div>
-                  <div>
-                    Owned by <span class="font-medium">{nftObj.owner_fmt}</span>
-                  </div>
-                </div>
-                <div class="bg-pink-100 rounded p-2 mt-2">
-                  <div>Current Price</div>
-                  <div class="mt-2 flex flex-row items-center">
-                    {/* <img
-                      src="https://storage.opensea.io/files/6f8e2979d428180222796ff4a33ab929.svg"
-                      size="24"
-                    ></img> */}
-                    <img
-                      src="https://gblobscdn.gitbook.com/orgs%2F-LiOowK9lXTPyPxhkAcr%2Favatar.png"
-                      width="48"
-                      height="48"
-                    ></img>
-
-                    <span class="px-2 text-4xl font-semibold">
-                      {nftObj.price}
-                    </span>
-                    <span class="text-sm font-medium">($123)</span>
-                  </div>
-                  <div class="flex justify-center mt-2">
-                    {!nftObj.isNftOwned && !nftObj.hasAuctionStarted && (
-                      <BuyNftBtn />
-                    )}
-                    {!nftObj.isNftOwned &&
-                      nftObj.hasAuctionStarted &&
-                      auctionObj &&
-                      !auctionObj.bidPlacedByCurr && (
-                        <div class="p-2 bg-red-200 flex flex-row w-full items-center rounded">
-                          <div class="pr-2">
-                            <label
-                              for="bid_price"
-                              class="block text-sm font-medium text-gray-700"
-                            >
-                              Bidding Price
-                            </label>
-                            <div
-                              key="bidCont1"
-                              class="mt-1 relative rounded-md shadow-sm"
-                            >
-                              <input
-                                type="number"
-                                key="bid1"
-                                name="bid_price"
-                                class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-5 sm:text-sm border-gray-300 rounded-md"
-                                placeholder="0.01"
-                                step="0.01"
-                                onChange={(e) => setBidPrice(e.target.value)}
-                              />
-                            </div>
-                          </div>
-                          <button
-                            class="bg-blue-500 text-white font-semibold hover:shadow-lg rounded p-2 w-full disabled:opacity-50"
-                            disabled={
-                              loading || auctionObj.currBiddingTime == 0
-                            }
-                            onClick={() => placeBid(nftObj)}
-                          >
-                            {!loading && <span>Place Bid</span>}
-                            {loading && <span>Placing ...</span>}
-                          </button>
-                        </div>
-                      )}
-                    {!nftObj.isNftOwned &&
-                      nftObj.hasAuctionStarted &&
-                      auctionObj &&
-                      auctionObj.bidPlacedByCurr && <PlacedBid />}
-                    {nftObj.isNftOwned && (
-                      <div class="flex flex-col">
-                        <span className="font-bold text-lg text-green-500 mb-1">
-                          Owned by me
-                        </span>
-                        {!nftObj.hasAuctionStarted && (
-                          <div class="flex flex-row">
-                            <DropDownBtn />
-                            <StartAuctionBtn />
-                          </div>
-                        )}
-                        {nftObj.hasAuctionStarted && (
-                          <div class="flex flex-row">
-                            {auctionObj && !auctionObj.auctionEnded && (
-                              <span className="font-bold text-lg text-green-500 mb-1">
-                                Auction Started
-                              </span>
-                            )}
-                            {/* {auctionObj && auctionObj.auctionEnded && (
-                              <span className="font-bold text-lg text-green-500 mb-1">
-                                Auction Ended
-                              </span>
-                            )} */}
-                            {auctionObj &&
-                              auctionObj.currBiddingTime == 0 &&
-                              !auctionObj.auctionEnded && <EndAuctionBtn />}
-                            {auctionObj &&
-                              auctionObj.currBiddingTime == 0 &&
-                              auctionObj.auctionEnded && (
-                                <div class="flex flex-row">
-                                  <DropDownBtn />
-                                  <StartAuctionBtn />
-                                </div>
-                              )}
-                          </div>
-                        )}
-                      </div>
-                    )}
-                  </div>
-                </div>
-                {auctionObj && (
-                  <div class="bg-green-100 rounded p-2 mt-2">
-                    <div>Auction Details</div>
-                    <div class="mt-2 flex flex-row items-center">
-                      {auctionObj.timer && (
-                        <div class="p-1 flex flex-row">
-                          <span class="pr-2">
-                            Time Left: {auctionObj.timer.m}:{auctionObj.timer.s}
-                          </span>
-                          <div class="pr-2">
-                            Highest Bidder: {auctionObj.highestBidderFmt}
-                          </div>
-                          <div>Highest Bid: {auctionObj.highestBid} ETH</div>
-                        </div>
-                      )}
-                    </div>
-                    <BidsLog />
-                  </div>
                 )}
               </div>
             </div>
-          )}
+            <div className="flex flex-col pl-4" style={{ width: "60%" }}>
+              <div className="" style={{ minWidth: "50%", height: "100%" }}>
+                <div className="flex justify-between" style={{ height: "10%" }}>
+                  <div className="ml-2">
+                    <span
+                      style={{
+                        color: "#FFCA0E",
+                        fontWeight: 600,
+                        fontSize: "30px",
+                      }}
+                    >
+                      LONDON
+                    </span>
+                  </div>
+                  <div className="mr-2 flex flex-row">
+                    <span
+                      style={{
+                        color: "#828282",
+                        fontWeight: 600,
+                        fontSize: "22px",
+                      }}
+                    >
+                      23&nbsp;
+                    </span>
+                    <Iconly
+                      name="Heart2"
+                      set="two-tone"
+                      primaryColor="red"
+                      size="large"
+                    />
+                  </div>
+                </div>
+                <div
+                  className="flex justify-between mt-2"
+                  style={{ height: "8%" }}
+                >
+                  <div className="ml-2">
+                    <span
+                      style={{
+                        color: "#828282",
+                        fontWeight: 600,
+                        fontSize: "20px",
+                      }}
+                    >
+                      Owned by <b>xyz123</b>
+                    </span>
+                  </div>
+                  <div className="mr-2 flex flex-row">
+                    <span
+                      style={{
+                        color: "#828282",
+                        fontWeight: 600,
+                        fontSize: "22px",
+                      }}
+                    >
+                      50&nbsp;
+                    </span>
+                    <Iconly
+                      name="Show"
+                      set="two-tone"
+                      primaryColor="black"
+                      size="large"
+                    />
+                  </div>
+                </div>
+                <div
+                  className="flex items-start pt-4 ml-2"
+                  style={{ height: "38%" }}
+                >
+                  <span
+                    style={{
+                      color: "#828282",
+                      fontWeight: 400,
+                      fontSize: "18px",
+                    }}
+                  >
+                    Live in the historic city of State along the river and hills
+                    with locals around.
+                  </span>
+                </div>
+                <div
+                  className=" flex flex-row justify-between"
+                  style={{ height: "26%" }}
+                >
+                  <div className="flex flex-col ml-2" style={{ width: "100%" }}>
+                    <span style={styles.listEntry}>Current bid</span>
+                    <div>
+                      <span
+                        style={{
+                          color: "#FF881B",
+                          fontWeight: 600,
+                          fontSize: "24px",
+                          lineHeight: "24px",
+                        }}
+                      >
+                        0.5&nbsp;
+                      </span>
+                      <span
+                        style={{
+                          color: "#828282",
+                          fontWeight: 600,
+                          fontSize: "24px",
+                          lineHeight: "24px",
+                        }}
+                      >
+                        ONE&nbsp;
+                      </span>
+                      <span
+                        style={{
+                          color: "#FFCA0E",
+                          fontWeight: 600,
+                          fontSize: "20px",
+                          lineHeight: "24px",
+                        }}
+                      >
+                        ($127)
+                      </span>
+                    </div>
+                  </div>
+                  <span
+                    style={{
+                      border: "1px solid #000000",
+                      width: "2px",
+                      height: "80%",
+                      opacity: "0.2",
+                    }}
+                  ></span>
+                  <div className="" style={{ width: "100%" }}>
+                    <div className="flex flex-col ml-4" style={{}}>
+                      <span
+                        style={{
+                          color: "#000000",
+                          fontWeight: 600,
+                          fontSize: "16px",
+                        }}
+                      >
+                        Auction ends in
+                      </span>
+                      <div>
+                        <span style={styles.auctionTimeNumber}>2</span>
+                        <span style={styles.auctionTimeDesc}>d&nbsp;</span>
+                        <span style={styles.auctionTimeNumber}>15</span>
+                        <span style={styles.auctionTimeDesc}>h&nbsp;</span>
+                        <span style={styles.auctionTimeNumber}>4</span>
+                        <span style={styles.auctionTimeDesc}>m&nbsp;</span>
+                        <span style={styles.auctionTimeNumber}>12</span>
+                        <span style={styles.auctionTimeDesc}>s&nbsp;</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  className="flex justify-start items-center"
+                  style={{ height: "18%" }}
+                >
+                  <input
+                    type="number"
+                    placeholder="Bidding Price ($ONE)"
+                    className="p-4 font-bold"
+                    style={{
+                      height: "40px",
+                      width: "150px",
+                      border: "1px solid #000000",
+                      borderRadius: "10px 0px 0px 10px",
+                      fontSize: "20px",
+                      opacity: "0.4",
+                      ":focus-visible": {
+                        border: "0px solid #000000",
+                      },
+                    }}
+                  />
+                  <button
+                    className="font-semibold uppercase bg-black"
+                    style={{
+                      height: "40px",
+                      width: "150px",
+                      color: "#FFCA0E",
+                      border: "1px solid #000000",
+                      borderRadius: "0px 17.5735px 17.5735px 0px",
+                      fontSize: "18px",
+                    }}
+                  >
+                    Place Bid
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-      </main>
+        <div
+          className="flex flex-row p-4"
+          style={{ height: "55%", width: "100%" }}
+        >
+          <div
+            className="flex flex-col ml-2 mt-4 pr-12"
+            style={{ width: "55%", height: "100%" }}
+          >
+            <span style={styles.entryLabel}>Mint Description:</span>
+            <span style={styles.entryDesc}>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Facilisi
+              fermentum volutpat sit phasellus accumsan massa urna. Augue at
+              diam lacus viverra risus elit libero ridiculus rutrum. Felis
+              venenatis nunc neque nascetur ornare lacus dictum enim. Metus,
+              curabitur elementum varius molestie. Vestibulum elit lobortis
+              consectetur orci faucibus nec eget ut.
+            </span>
+            <br />
+            <span style={styles.entryLabel}>Token ID:</span>
+            <span style={styles.entryDesc}>xxxxxx</span>
+          </div>
+          <span
+            style={{
+              border: "1px solid #000000",
+              width: "2px",
+              height: "80%",
+              opacity: "0.2",
+            }}
+          ></span>
+          <div
+            className="mt-4 ml-4 pl-4"
+            style={{ width: "45%", height: "100%" }}
+          >
+            <span style={styles.sectionLabel}>Bid Logs</span>
+            <ul className="m-2 list-disc list-inside mt-8">
+              <li className="mb-4">
+                <span style={styles.listEntry}>Booked by @username</span>
+                <br />
+                <span className="ml-4" style={styles.listFollow}>
+                  <b>0.5 ETH</b> on 8th May, 1999 14:45
+                </span>
+              </li>
+              <span
+                style={{
+                  border: "1px solid #000000",
+                  width: "2px",
+                  height: "100%",
+                  opacity: "0.2",
+                }}
+              ></span>
+              <li>
+                <span style={styles.listEntry}>Booked by @username</span>
+                <br />
+                <span className="ml-2" style={styles.listFollow}>
+                  <b>0.5 ETH</b> on 8th May, 1999 14:45
+                </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
+    // <div class="">
+    //   <main class="main flex flex-col">
+    //     <div class="main-content">
+    //       {nftObj && (
+    //         <div class="p-6 flex flex-row justify-center">
+    //           <div class="bg-purple-400 flex flex-col items-center justify-center rounded-lg cursor-pointer hover:shadow-md hover:bg-purple-300 h-full w-1/3">
+    //             <div class="relative w-full p-1 flex justify-center">
+    //               <div
+    //                 dangerouslySetInnerHTML={{ __html: nftObj.svg_image }}
+    //               ></div>
+    //             </div>
+    //           </div>
+    //           <div class="bg-gray-400 w-2/3 p-2 m-2">
+    //             <div class="bg-pink-300 rounded p-2">
+    //               <div>Token Id: {id}</div>
+    //               <div class="font-extrabold text-lg">{nftObj.name}</div>
+    //               <div>
+    //                 Owned by <span class="font-medium">{nftObj.owner_fmt}</span>
+    //               </div>
+    //             </div>
+    //             <div class="bg-pink-100 rounded p-2 mt-2">
+    //               <div>Current Price</div>
+    //               <div class="mt-2 flex flex-row items-center">
+    //                 {/* <img
+    //                   src="https://storage.opensea.io/files/6f8e2979d428180222796ff4a33ab929.svg"
+    //                   size="24"
+    //                 ></img> */}
+    //                 <img
+    //                   src="https://gblobscdn.gitbook.com/orgs%2F-LiOowK9lXTPyPxhkAcr%2Favatar.png"
+    //                   width="48"
+    //                   height="48"
+    //                 ></img>
+
+    //                 <span class="px-2 text-4xl font-semibold">
+    //                   {nftObj.price}
+    //                 </span>
+    //                 <span class="text-sm font-medium">($123)</span>
+    //               </div>
+    //               <div class="flex justify-center mt-2">
+    //                 {!nftObj.isNftOwned && !nftObj.hasAuctionStarted && (
+    //                   <BuyNftBtn />
+    //                 )}
+    //                 {!nftObj.isNftOwned &&
+    //                   nftObj.hasAuctionStarted &&
+    //                   auctionObj &&
+    //                   !auctionObj.bidPlacedByCurr && (
+    //                     <div class="p-2 bg-red-200 flex flex-row w-full items-center rounded">
+    //                       <div class="pr-2">
+    //                         <label
+    //                           for="bid_price"
+    //                           class="block text-sm font-medium text-gray-700"
+    //                         >
+    //                           Bidding Price
+    //                         </label>
+    //                         <div
+    //                           key="bidCont1"
+    //                           class="mt-1 relative rounded-md shadow-sm"
+    //                         >
+    //                           <input
+    //                             type="number"
+    //                             key="bid1"
+    //                             name="bid_price"
+    //                             class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-5 sm:text-sm border-gray-300 rounded-md"
+    //                             placeholder="0.01"
+    //                             step="0.01"
+    //                             onChange={(e) => setBidPrice(e.target.value)}
+    //                           />
+    //                         </div>
+    //                       </div>
+    //                       <button
+    //                         class="bg-blue-500 text-white font-semibold hover:shadow-lg rounded p-2 w-full disabled:opacity-50"
+    //                         disabled={
+    //                           loading || auctionObj.currBiddingTime == 0
+    //                         }
+    //                         onClick={() => placeBid(nftObj)}
+    //                       >
+    //                         {!loading && <span>Place Bid</span>}
+    //                         {loading && <span>Placing ...</span>}
+    //                       </button>
+    //                     </div>
+    //                   )}
+    //                 {!nftObj.isNftOwned &&
+    //                   nftObj.hasAuctionStarted &&
+    //                   auctionObj &&
+    //                   auctionObj.bidPlacedByCurr && <PlacedBid />}
+    //                 {nftObj.isNftOwned && (
+    //                   <div class="flex flex-col">
+    //                     <span className="font-bold text-lg text-green-500 mb-1">
+    //                       Owned by me
+    //                     </span>
+    //                     {!nftObj.hasAuctionStarted && (
+    //                       <div class="flex flex-row">
+    //                         <DropDownBtn />
+    //                         <StartAuctionBtn />
+    //                       </div>
+    //                     )}
+    //                     {nftObj.hasAuctionStarted && (
+    //                       <div class="flex flex-row">
+    //                         {auctionObj && !auctionObj.auctionEnded && (
+    //                           <span className="font-bold text-lg text-green-500 mb-1">
+    //                             Auction Started
+    //                           </span>
+    //                         )}
+    //                         {/* {auctionObj && auctionObj.auctionEnded && (
+    //                           <span className="font-bold text-lg text-green-500 mb-1">
+    //                             Auction Ended
+    //                           </span>
+    //                         )} */}
+    //                         {auctionObj &&
+    //                           auctionObj.currBiddingTime == 0 &&
+    //                           !auctionObj.auctionEnded && <EndAuctionBtn />}
+    //                         {auctionObj &&
+    //                           auctionObj.currBiddingTime == 0 &&
+    //                           auctionObj.auctionEnded && (
+    //                             <div class="flex flex-row">
+    //                               <DropDownBtn />
+    //                               <StartAuctionBtn />
+    //                             </div>
+    //                           )}
+    //                       </div>
+    //                     )}
+    //                   </div>
+    //                 )}
+    //               </div>
+    //             </div>
+    //             {auctionObj && (
+    //               <div class="bg-green-100 rounded p-2 mt-2">
+    //                 <div>Auction Details</div>
+    //                 <div class="mt-2 flex flex-row items-center">
+    //                   {auctionObj.timer && (
+    //                     <div class="p-1 flex flex-row">
+    //                       <span class="pr-2">
+    //                         Time Left: {auctionObj.timer.m}:{auctionObj.timer.s}
+    //                       </span>
+    //                       <div class="pr-2">
+    //                         Highest Bidder: {auctionObj.highestBidderFmt}
+    //                       </div>
+    //                       <div>Highest Bid: {auctionObj.highestBid} ETH</div>
+    //                     </div>
+    //                   )}
+    //                 </div>
+    //                 <BidsLog />
+    //               </div>
+    //             )}
+    //           </div>
+    //         </div>
+    //       )}
+    //     </div>
+    //   </main>
+    // </div>
   );
 }

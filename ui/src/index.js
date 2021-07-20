@@ -21,6 +21,7 @@ import About from "views/About.js";
 import NftDetail from "views/NftDetail.js";
 
 import Store from "./stores/store";
+import Marketplace from "views/Marketplace";
 const store = Store.store;
 const emitter = Store.emitter;
 const dispatcher = Store.dispatcher;
@@ -38,6 +39,9 @@ function App() {
         <Switch>
           <Route exact path="/">
             <Home />
+          </Route>
+          <Route exact path="/market">
+            <Marketplace />
           </Route>
           <Route path="/about">
             <About />

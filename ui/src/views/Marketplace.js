@@ -10,6 +10,7 @@ import {
   numToStr,
 } from "@harmony-js/utils";
 import { BN } from "@harmony-js/crypto";
+import { Iconly } from "react-iconly";
 
 import { useHistory } from "react-router-dom";
 
@@ -54,23 +55,32 @@ export default function Marketplace() {
       console.log("nftCount", nftCount);
       setNftCount(nftCount);
       let tmpList = [];
-      for (var i = 0; i < nftCount; i++) {
-        const nft = await contract.methods.getTokenDetails(i).call();
-        const owner = await contract.methods.getOwnerOf(i).call();
-        let price = await contract.methods.getPriceOf(i).call();
-        //For ETH
-        // price = window.web3.utils.fromWei(price);
-        price = fromWei(price, Units.one);
-        const isNftOwned = owner == store.getStore().account ? true : false;
-        let nftObj = {
-          tokenId: i,
-          name: nft.location_name,
-          svg_image: nft.svg_image,
-          price: price,
-          isNftOwned: isNftOwned,
-        };
-        tmpList.push(nftObj);
-      }
+      //test_nft
+      let testNftObj = {
+        tokenId: 0,
+        name: "Mumbai",
+        svg_image: "",
+        price: "2",
+        isNftOwned: true,
+      };
+      tmpList = [testNftObj];
+      //   for (var i = 0; i < nftCount; i++) {
+      //     const nft = await contract.methods.getTokenDetails(i).call();
+      //     const owner = await contract.methods.getOwnerOf(i).call();
+      //     let price = await contract.methods.getPriceOf(i).call();
+      //     //For ETH
+      //     // price = window.web3.utils.fromWei(price);
+      //     price = fromWei(price, Units.one);
+      //     const isNftOwned = owner == store.getStore().account ? true : false;
+      //     let nftObj = {
+      //       tokenId: i,
+      //       name: nft.location_name,
+      //       svg_image: nft.svg_image,
+      //       price: price,
+      //       isNftOwned: isNftOwned,
+      //     };
+      //     tmpList.push(nftObj);
+      //   }
       setNftList(tmpList);
     }
   };
@@ -104,89 +114,183 @@ export default function Marketplace() {
     route_history.push("/nft/" + id);
   };
 
+  const Styles = {
+    filterOption: {
+      color: "#000000",
+      fontWeight: 600,
+      fontSize: "22px",
+      fontStyle: "normal",
+    },
+    sortSelectedOption: {
+      backgroundColor: "",
+      border: "0px solid rgba(0, 0, 0, 0.25)",
+      borderRadius: "10px",
+      boxShadow: "8px 8px 4px rgba(0, 0, 0, 0.25)",
+      padding: "10px",
+      width: "100px",
+    },
+    sortOptionsBtn: {
+      fontWeight: 600,
+      fontSize: "22px",
+    },
+  };
+
   return (
-    <div class="flex flex-row min-h-screen">
-      <aside class="sidebar w-64 bg-indigo-500">
-        <div class="sidebar-header flex items-center justify-center py-4">
-          <div class="inline-flex">
-            <a href="#" class="inline-flex items-center">
-              <svg
-                class="w-10 h-10 text-red-400"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M11.757 2.034a1 1 0 01.638.519c.483.967.844 1.554 1.207 2.03.368.482.756.876 1.348 1.467A6.985 6.985 0 0117 11a7.002 7.002 0 01-14 0c0-1.79.684-3.583 2.05-4.95a1 1 0 011.707.707c0 1.12.07 1.973.398 2.654.18.374.461.74.945 1.067.116-1.061.328-2.354.614-3.58.225-.966.505-1.93.839-2.734.167-.403.356-.785.57-1.116.208-.322.476-.649.822-.88a1 1 0 01.812-.134zm.364 13.087A2.998 2.998 0 017 13s.879.5 2.5.5c0-1 .5-4 1.25-4.5.5 1 .786 1.293 1.371 1.879.586.585.879 1.353.879 2.121s-.293 1.536-.879 2.121z"
-                  clip-rule="evenodd"
-                />
-              </svg>
-              <span class="font-bold ml-1 uppercase">Filter</span>
-            </a>
-          </div>
+    <div className="flex flex-row home" style={{ height: "90vh" }}>
+      <aside
+        className="sidebar"
+        style={{
+          backgroundColor: "rgba(196, 196, 196,0.2)",
+          width: "18%",
+        }}
+      >
+        <div className="sidebar-header flex py-4 px-2">
+          <span
+            className="self-start"
+            style={{
+              color: "#000000",
+              fontWeight: 600,
+              fontSize: "50px",
+              fontStyle: "normal",
+              lineHeight: "73px",
+            }}
+          >
+            Filter
+          </span>
         </div>
-        <div class="sidebar-content px-4 py-6">
-          <ul class="flex flex-col w-full">
+        <div className="sidebar-content">
+          <ul className="flex flex-col w-full">
             <li>
               <a
                 href="#"
-                class="flex flex-row items-center rounded-lg text-gray-700 bg-gray-400 h-10 px-3 "
+                className="flex flex-row justify-between items-center rounded-lg h-20 px-3 "
               >
-                <span class="ml-3">Dashboard</span>
+                <span style={Styles.filterOption}>Categories</span>
+                <Iconly
+                  name="ChevronDownCircle"
+                  set="two-tone"
+                  primaryColor="black"
+                  size="large"
+                />
               </a>
+              <div className="flex items-center px-3">
+                <span
+                  style={{
+                    border: "1px solid #000000",
+                    width: "100%",
+                    opacity: "0.1",
+                  }}
+                ></span>
+              </div>
             </li>
-            <li class="my-px">
-              <span class="flex font-medium text-sm text-gray-300 px-4 my-4 uppercase">
-                Projects
-              </span>
+            <li className="my-px">
+              <a
+                href="#"
+                className="flex flex-row justify-between items-center rounded-lg h-20 px-3 "
+              >
+                <span style={Styles.filterOption}>Price</span>
+                <Iconly
+                  name="ChevronDownCircle"
+                  set="two-tone"
+                  primaryColor="black"
+                  size="large"
+                />
+              </a>
+              <div className="flex items-center px-3">
+                <span
+                  style={{
+                    border: "1px solid #000000",
+                    width: "100%",
+                    opacity: "0.1",
+                  }}
+                ></span>
+              </div>
             </li>
             <li>
               <a
                 href="#"
-                class="flex flex-row items-center rounded-lg text-gray-300 hover:bg-gray-100 hover:text-gray-700 h-10 px-3 "
+                className="flex flex-row justify-between  items-center rounded-lg h-20 px-3 "
               >
-                <span class="ml-3">Status</span>
+                <span style={Styles.filterOption}>Status</span>
+                <Iconly
+                  name="ChevronDownCircle"
+                  set="two-tone"
+                  primaryColor="black"
+                  size="large"
+                />
               </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                class="flex flex-row items-center rounded-lg text-gray-300 hover:bg-gray-100 hover:text-gray-700 h-10 px-3 "
-              >
-                <span class="ml-3">Price</span>
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                class="flex flex-row items-center rounded-lg text-gray-300 hover:bg-gray-100 hover:text-gray-700 h-10 px-3 "
-              >
-                <span class="ml-3">Categories</span>
-              </a>
+              <div className="flex items-center px-3">
+                <span
+                  style={{
+                    border: "1px solid #000000",
+                    width: "100%",
+                    opacity: "0.1",
+                  }}
+                ></span>
+              </div>
             </li>
           </ul>
         </div>
       </aside>
-      <main class="main flex flex-col flex-grow">
-        <header class="header bg-white shadow py-4 px-4">
-          NFTs minted: {nftCount}
+      <main className="main flex flex-col flex-grow">
+        <header className="header bg-white shadow py-4 px-4">
+          {/* NFTs minted: {nftCount} */}
+          <div className="flex justify-between">
+            <div>
+              <button
+                className="flex flex-row justify-between"
+                style={Styles.sortSelectedOption}
+              >
+                Latest
+                <Iconly
+                  name="CloseSquare"
+                  set="two-tone"
+                  primaryColor="black"
+                  size="medium"
+                />
+              </button>
+            </div>
+            <div className="flex flex-row">
+              <span className="mr-2" style={Styles.sortOptionsBtn}>
+                Sort by
+              </span>
+              <Iconly
+                name="ChevronDownCircle"
+                set="two-tone"
+                primaryColor="black"
+                size="medium"
+              />
+            </div>
+          </div>
         </header>
-        <div class="main-content">
-          <div class="w-full p-6">
+        <div className="main-content">
+          <div className="w-full p-6">
             {loading && <span>Loading ...</span>}
             {!loading && (
-              <div class="grid grid-cols-3 gap-4">
+              <div className="grid grid-cols-3 gap-4">
                 {nftList.map((nft, idx) => {
                   return (
                     <div
-                      class="bg-purple-400 w-full flex flex-col items-center justify-center rounded-lg cursor-pointer hover:shadow-md hover:bg-purple-300 h-full"
+                      className="w-full flex flex-col items-center justify-center rounded-lg cursor-pointer hover:shadow-md hover:bg-purple-300 h-full"
+                      style={{
+                        width: "350px",
+                        height: "370px",
+                        boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
+                      }}
                       onClick={() => routeToDetail(nft.tokenId)}
                       key={idx}
                     >
-                      {nft.isNftOwned && (
-                        <div class="p-2 font-semibold">Owned</div>
-                      )}
-                      <div class="relative w-full p-1 flex justify-center">
+                      {/* {nft.isNftOwned && (
+                        <div className="p-2 font-semibold">Owned</div>
+                      )} */}
+                      <div
+                        className="relative w-full p-1 flex justify-center m-2"
+                        style={{
+                          height: "85%",
+                          background:
+                            "radial-gradient(77.96% 81.64% at 50% 50%, #FFFFFF 0%, #FFCA0E 100%)",
+                        }}
+                      >
                         <div
                           dangerouslySetInnerHTML={{ __html: nft.svg_image }}
                         ></div>
@@ -196,8 +300,116 @@ export default function Marketplace() {
                         height="100px"
                       ></img> */}
                       </div>
-                      <div class="p-2 font-semibold">{nft.name}</div>
-                      <div class="mb-1 font-semibold">{nft.price} ONE</div>
+                      <div
+                        className="flex justify-between w-full"
+                        style={{
+                          height: "10%",
+                        }}
+                      >
+                        <div className="ml-2 flex flex-row">
+                          <Iconly
+                            name="Heart2"
+                            set="two-tone"
+                            primaryColor="black"
+                            size="medium"
+                          />
+                          <span
+                            style={{
+                              color: "#828282",
+                              fontFamily: "Montserrat",
+                              fontWeight: 600,
+                              fontSize: "20px",
+                              fontStyle: "normal",
+                              lineHeight: "22px",
+                            }}
+                          >
+                            &nbsp;23
+                          </span>
+                        </div>
+                        <div className="mr-2">
+                          <span
+                            style={{
+                              color: "#5D5D5D",
+                              fontFamily: "Montserrat",
+                              fontWeight: 600,
+                              fontSize: "20px",
+                              fontStyle: "normal",
+                              lineHeight: "25px",
+                            }}
+                          >
+                            current bid
+                          </span>
+                        </div>
+                      </div>
+                      <div
+                        className="flex justify-between w-full"
+                        style={{
+                          height: "10%",
+                        }}
+                      >
+                        <div className="ml-2">
+                          <span
+                            className="uppercase"
+                            style={{
+                              color: "#FFCA0E",
+                              fontWeight: 600,
+                              fontSize: "21px",
+                              fontStyle: "normal",
+                              lineHeight: "28px",
+                            }}
+                          >
+                            {nft.name}
+                          </span>
+                        </div>
+                        <div className="mr-2">
+                          <span
+                            className="uppercase"
+                            style={{
+                              color: "#FFCA0E",
+                              fontWeight: 600,
+                              fontSize: "21px",
+                              fontStyle: "normal",
+                              lineHeight: "28px",
+                            }}
+                          >
+                            {nft.price}&nbsp;
+                          </span>
+                          <span
+                            className="uppercase"
+                            style={{
+                              color: "#FFCA0E",
+                              fontWeight: 600,
+                              fontSize: "20px",
+                              fontStyle: "normal",
+                              lineHeight: "28px",
+                            }}
+                          >
+                            ONE
+                          </span>
+                        </div>
+                      </div>
+                      <hr />
+                      <div
+                        className="flex justify-between w-full mt-2"
+                        style={{
+                          height: "10%",
+                        }}
+                      >
+                        <div className="ml-2">
+                          <span
+                            style={{
+                              color: "#828282",
+                              fontFamily: "Montserrat",
+                              fontWeight: 600,
+                              fontSize: "18px",
+                              fontStyle: "normal",
+                              lineHeight: "22px",
+                            }}
+                          >
+                            Owned by
+                          </span>
+                        </div>
+                      </div>
                     </div>
                   );
                 })}
