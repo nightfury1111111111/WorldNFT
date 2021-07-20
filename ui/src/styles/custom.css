@@ -1,3 +1,7 @@
 .dropdown:hover .dropdown-menu {
   display: block;
 }
+
+.home {
+  font-family: "Montserrat";
+}

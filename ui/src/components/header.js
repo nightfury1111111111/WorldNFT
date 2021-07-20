@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
+import "./header.css";
 import Store from "../stores/store";
 const store = Store.store;
 const emitter = Store.emitter;
@@ -45,8 +46,10 @@ class Header extends Component {
 
   render() {
     return (
-      <nav class="flex items-center justify-between flex-wrap bg-red-200 p-6">
-        <div class="flex items-center flex-no-shrink text-black mr-6">
+      <nav
+        className={"flex items-center justify-between flex-wrap p-2 myHeader"}
+      >
+        <div class="flex flex-row items-center mr-6">
           <svg
             class="h-8 w-8 mr-2"
             width="54"
@@ -56,7 +59,8 @@ class Header extends Component {
           >
             <path d="M13.5 22.1c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05zM0 38.3c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05z" />
           </svg>
-          <span class="font-semibold text-xl tracking-tight">World NFT</span>
+          <span class="title2 mr-14">ONE WORLD</span>
+          <span class="title mt-4">NFT</span>
         </div>
         <div className="flex flex-row">
           {this.state.accountFmt && (
