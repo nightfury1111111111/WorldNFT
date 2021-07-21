@@ -29,6 +29,7 @@
     "gulp-append-prepend": "1.0.8",
     "react": "17.0.1",
     "react-dom": "17.0.1",
+    "react-iconly": "^2.2.2",
     "react-redux": "^7.2.4",
     "react-router": "5.2.0",
     "react-router-dom": "5.2.0",
