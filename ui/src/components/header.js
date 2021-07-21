@@ -69,7 +69,9 @@ class Header extends Component {
         </div>
         <div className="flex flex-row">
           {this.state.accountFmt && (
-            <span className="p-2 font-bold">{this.state.accountFmt}</span>
+            <span className="p-2 font-bold text-white">
+              {this.state.accountFmt}
+            </span>
           )}
           {!this.state.accountFmt && (
             <span className="p-2 font-bold text-white">

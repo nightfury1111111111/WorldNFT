@@ -56,31 +56,33 @@ export default function Marketplace() {
       setNftCount(nftCount);
       let tmpList = [];
       //test_nft
-      let testNftObj = {
-        tokenId: 0,
-        name: "Mumbai",
-        svg_image: "",
-        price: "2",
-        isNftOwned: true,
-      };
-      tmpList = [testNftObj];
-      //   for (var i = 0; i < nftCount; i++) {
-      //     const nft = await contract.methods.getTokenDetails(i).call();
-      //     const owner = await contract.methods.getOwnerOf(i).call();
-      //     let price = await contract.methods.getPriceOf(i).call();
-      //     //For ETH
-      //     // price = window.web3.utils.fromWei(price);
-      //     price = fromWei(price, Units.one);
-      //     const isNftOwned = owner == store.getStore().account ? true : false;
-      //     let nftObj = {
-      //       tokenId: i,
-      //       name: nft.location_name,
-      //       svg_image: nft.svg_image,
-      //       price: price,
-      //       isNftOwned: isNftOwned,
-      //     };
-      //     tmpList.push(nftObj);
-      //   }
+      //   let testNftObj = {
+      //     tokenId: 0,
+      //     name: "Mumbai",
+      //     svg_image: "",
+      //     price: "2",
+      //     isNftOwned: true,
+      //   };
+      //   tmpList = [testNftObj];
+
+      //From blockchain
+      for (var i = 0; i < nftCount; i++) {
+        const nft = await contract.methods.getTokenDetails(i).call();
+        const owner = await contract.methods.getOwnerOf(i).call();
+        let price = await contract.methods.getPriceOf(i).call();
+        //For ETH
+        // price = window.web3.utils.fromWei(price);
+        price = fromWei(price, Units.one);
+        const isNftOwned = owner == store.getStore().account ? true : false;
+        let nftObj = {
+          tokenId: i,
+          name: nft.location_name,
+          svg_image: nft.svg_image,
+          price: price,
+          isNftOwned: isNftOwned,
+        };
+        tmpList.push(nftObj);
+      }
       setNftList(tmpList);
     }
   };
@@ -271,7 +273,7 @@ export default function Marketplace() {
                 {nftList.map((nft, idx) => {
                   return (
                     <div
-                      className="w-full flex flex-col items-center justify-center rounded-lg cursor-pointer hover:shadow-md hover:bg-purple-300 h-full"
+                      className="w-full flex flex-col items-center justify-center rounded-lg cursor-pointer hover:shadow-md h-full"
                       style={{
                         width: "350px",
                         height: "370px",
