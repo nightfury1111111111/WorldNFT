@@ -48,14 +48,6 @@ class Store {
     );
   }
 
-  //   initializeContract = async (wallet) => {
-  //     const abi = Counter.abi;
-  //     const contractAddress = Counter.networks["2"].address;
-  //     console.log(contractAddress);
-  //     const contractInstance = hmy.contracts.createContract(abi, contractAddress);
-  //     return contractInstance;
-  //   };
-
   configureEthMetamask = async () => {
     if (window.ethereum) {
       window.web3 = new Web3(window.ethereum);

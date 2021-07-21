@@ -228,26 +228,26 @@ export default function NftDetail() {
     //listen to events
     if (contract.events.AuctionStarted) {
       contract.events.AuctionStarted({}, async (error, event) => {
-        console.log("AuctionStarted ", event);
+        // console.log("AuctionStarted ", event);
         setLoading(false);
         refreshContractData();
       });
     }
     if (contract.events.BidIncrease) {
       contract.events.BidIncrease({}, async (err, event) => {
-        console.log("BidIncrease ", event.returnValues);
+        // console.log("BidIncrease ", event.returnValues);
         setLoading(false);
         refreshContractData();
       });
     }
     if (contract.events.BidRejected) {
       contract.events.BidRejected({}, async (err, event) => {
-        console.log("BidRejected ", event.returnValues);
+        // console.log("BidRejected ", event.returnValues);
       });
     }
     if (contract.events.BidWithdrawn) {
       contract.events.BidWithdrawn({}, async (err, event) => {
-        console.log("BidWithdrawn ", event.returnValues);
+        // console.log("BidWithdrawn ", event.returnValues);
         setLoading(false);
         refreshContractData();
       });
@@ -456,16 +456,32 @@ export default function NftDetail() {
 
   const PlacedBid = () => (
     <div className="flex flex-row gap-2">
-      <button
-        className="bg-blue-500 text-white font-semibold hover:shadow-lg rounded p-2 w-full disabled:opacity-50"
+      {/* <button
+        className="font-semibold uppercase bg-green-500"
+        style={{
+          height: "40px",
+          width: "200px",
+          color: "#FFCA0E",
+          border: "1px solid #000000",
+          borderRadius: "10px 10px 10px 10px",
+          fontSize: "15px",
+        }}
         disabled={loading || auctionObj.currBiddingTime == 0}
         onClick={() => incBid(nftObj)}
       >
         {!loading && <span>Increase Bid</span>}
         {loading && <span>Increasing ...</span>}
-      </button>
+      </button> */}
       <button
-        className="bg-red-500 text-white font-semibold hover:shadow-lg rounded p-2 w-full disabled:opacity-50"
+        className="font-semibold uppercase bg-red-500"
+        style={{
+          height: "40px",
+          width: "200px",
+          color: "#FFCA0E",
+          border: "1px solid #000000",
+          borderRadius: "10px 10px 10px 10px",
+          fontSize: "15px",
+        }}
         disabled={loading}
         onClick={() => withdrawBid(nftObj)}
       >
@@ -843,24 +859,29 @@ export default function NftDetail() {
                           opacity: "0.2",
                         }}
                       ></span>
-                      {nftObj.hasAuctionStarted && auctionObj && (
-                        <>
-                          <AuctionTime />
-                          <span
-                            style={{
-                              border: "1px solid #000000",
-                              width: "2px",
-                              height: "80%",
-                              opacity: "0.2",
-                            }}
-                          ></span>
-                          <HighestBidInfo />
-                        </>
-                      )}
+                      {nftObj.hasAuctionStarted &&
+                        auctionObj &&
+                        !auctionObj.auctionEnded && (
+                          <>
+                            <AuctionTime />
+                            <span
+                              style={{
+                                border: "1px solid #000000",
+                                width: "2px",
+                                height: "80%",
+                                opacity: "0.2",
+                              }}
+                            ></span>
+                            <HighestBidInfo />
+                          </>
+                        )}
 
-                      {!nftObj.isNftOwned && !nftObj.hasAuctionStarted && (
-                        <AuctionNot />
-                      )}
+                      {!nftObj.isNftOwned &&
+                        !nftObj.hasAuctionStarted &&
+                        !auctionObj && <AuctionNot />}
+                      {nftObj.hasAuctionStarted &&
+                        auctionObj &&
+                        auctionObj.auctionEnded && <AuctionNot />}
                       {nftObj.isNftOwned && !nftObj.hasAuctionStarted && (
                         <AuctionNot />
                       )}
@@ -896,9 +917,19 @@ export default function NftDetail() {
                             <PlaceBidBtn />
                           </>
                         )}
-                      {nftObj.isNftOwned && !nftObj.hasAuctionStarted && (
+                      {!nftObj.isNftOwned &&
+                        nftObj.hasAuctionStarted &&
+                        auctionObj &&
+                        auctionObj.bidPlacedByCurr && <PlacedBid />}
+                      {nftObj.isNftOwned &&
+                        !nftObj.hasAuctionStarted &&
+                        !auctionObj && (
+                          <>
+                            <StartAuctionMenu />
+                          </>
+                        )}
+                      {nftObj.isNftOwned && nftObj.hasAuctionStarted && (
                         <>
-                          <StartAuctionMenu />
                           {auctionObj &&
                             auctionObj.currBiddingTime == 0 &&
                             !auctionObj.auctionEnded && <EndAuctionBtn />}
@@ -908,7 +939,7 @@ export default function NftDetail() {
                         <>
                           {auctionObj &&
                             auctionObj.currBiddingTime == 0 &&
-                            !auctionObj.auctionEnded && <EndAuctionBtn />}
+                            auctionObj.auctionEnded && <StartAuctionMenu />}
                         </>
                       )}
                     </div>
@@ -958,96 +989,5 @@ export default function NftDetail() {
         )}
       </div>
     </div>
-    // <div className="">
-    //   <main className="main flex flex-col">
-    //     <div className="main-content">
-    //       {nftObj && (
-    //         <div className="p-6 flex flex-row justify-center">
-    //           <div className="bg-purple-400 flex flex-col items-center justify-center rounded-lg cursor-pointer hover:shadow-md hover:bg-purple-300 h-full w-1/3">
-    //             <div className="relative w-full p-1 flex justify-center">
-    //               <div
-    //                 dangerouslySetInnerHTML={{ __html: nftObj.svg_image }}
-    //               ></div>
-    //             </div>
-    //           </div>
-    //           <div className="bg-gray-400 w-2/3 p-2 m-2">
-    //             <div className="bg-pink-300 rounded p-2">
-    //               <div>Token Id: {id}</div>
-    //               <div className="font-extrabold text-lg">{nftObj.name}</div>
-    //               <div>
-    //                 Owned by <span className="font-medium">{nftObj.owner_fmt}</span>
-    //               </div>
-    //             </div>
-    //             <div className="bg-pink-100 rounded p-2 mt-2">
-    //               <div>Current Price</div>
-    //               <div className="mt-2 flex flex-row items-center">
-    //                 {/* <img
-    //                   src="https://storage.opensea.io/files/6f8e2979d428180222796ff4a33ab929.svg"
-    //                   size="24"
-    //                 ></img> */}
-    //                 <img
-    //                   src="https://gblobscdn.gitbook.com/orgs%2F-LiOowK9lXTPyPxhkAcr%2Favatar.png"
-    //                   width="48"
-    //                   height="48"
-    //                 ></img>
-
-    //                 <span className="px-2 text-4xl font-semibold">
-    //                   {nftObj.price}
-    //                 </span>
-    //                 <span className="text-sm font-medium">($123)</span>
-    //               </div>
-    //               <div className="flex justify-center mt-2">
-    //                 {!nftObj.isNftOwned && !nftObj.hasAuctionStarted && (
-    //                   <BuyNftBtn />
-    //                 )}
-    //
-    //                 {!nftObj.isNftOwned &&
-    //                   nftObj.hasAuctionStarted &&
-    //                   auctionObj &&
-    //                   auctionObj.bidPlacedByCurr && <PlacedBid />}
-    //                 {nftObj.isNftOwned && (
-    //                   <div className="flex flex-col">
-    //                     <span className="font-bold text-lg text-green-500 mb-1">
-    //                       Owned by me
-    //                     </span>
-    //                     {!nftObj.hasAuctionStarted && (
-    //                       <div className="flex flex-row">
-    //                         <DropDownBtn />
-    //                         <StartAuctionBtn />
-    //                       </div>
-    //                     )}
-    //                     {nftObj.hasAuctionStarted && (
-    //                       <div className="flex flex-row">
-    //                         {auctionObj && !auctionObj.auctionEnded && (
-    //                           <span className="font-bold text-lg text-green-500 mb-1">
-    //                             Auction Started
-    //                           </span>
-    //                         )}
-    //                         {/* {auctionObj && auctionObj.auctionEnded && (
-    //                           <span className="font-bold text-lg text-green-500 mb-1">
-    //                             Auction Ended
-    //                           </span>
-    //                         )} */}
-    //
-    //                         {auctionObj &&
-    //                           auctionObj.currBiddingTime == 0 &&
-    //                           auctionObj.auctionEnded && (
-    //                             <div className="flex flex-row">
-    //                               <DropDownBtn />
-    //                               <StartAuctionBtn />
-    //                             </div>
-    //                           )}
-    //                       </div>
-    //                     )}
-    //                   </div>
-    //                 )}
-    //               </div>
-    //             </div>
-    //           </div>
-    //         </div>
-    //       )}
-    //     </div>
-    //   </main>
-    // </div>
   );
 }
