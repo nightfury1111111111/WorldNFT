@@ -14,4 +14,4 @@ Run UI:
 cd ui
 yarn start
 
-![Home Screen](https://github.com/swapp1990/WorldNFT/blob/master/screenshot/nft1.jpg?raw=true)
+![Home Screen](https://github.com/swapp1990/WorldNFT/blob/master/screenshot/nft1.JPG?raw=true)
