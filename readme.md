@@ -8,6 +8,7 @@ ONE World is a collectible NFT marketplace for real-world locations on planet Ea
 4. Can bid on multiple NFTs which are available on auction sales
 5. Can withdraw a bid
 6. Transfer ownership of NFT and ONE tokens between the highest bid winner and the auction owner
+7. See bid logs of auction
 
 Config:
 * Add .env file inside truffle.
@@ -44,5 +45,6 @@ https://docs.harmony.one/home/network/wallets/browser-extensions-wallets/metamas
 5. NFT Auction Started
 ![Auction](https://github.com/swapp1990/WorldNFT/blob/master/screenshot/nft5.JPG?raw=true)
 
-
+6. Place bid
+![Bids](https://github.com/swapp1990/WorldNFT/blob/master/screenshot/nft6.JPG?raw=true)
 
