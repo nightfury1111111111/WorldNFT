@@ -1,0 +1,9 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:display=swap");
+
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+.home {
+  font-family: "Montserrat", sans-serif;
+}
