@@ -1,4 +1,4 @@
-// truffle migrate --reset --network rinkeby --skip-dry-run
+// truffle migrate --reset --network harmony_testnet
 
 require("dotenv").config();
 const { TruffleProvider } = require("@harmony-js/core");
@@ -56,5 +56,5 @@ module.exports = {
       // }
     },
   },
-  contracts_build_directory: "ui/src/abi",
+  contracts_build_directory: "../ui/src/abi",
 };

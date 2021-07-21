@@ -24,6 +24,7 @@ export default function Home() {
           style={{
             position: "absolute",
             right: "10%",
+
             top: "100px",
           }}
         ></img>
