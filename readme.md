@@ -72,3 +72,8 @@ Run UI:
    
 ** Future Mockup **
 ![Map](https://github.com/swapp1990/WorldNFT/blob/master/screenshot/map1.JPG?raw=true)
+
+Coming soon
+1. Buy Landmarks
+2. Geo-location verification for buying Location-based NFTs or trading them
+3. More geo-location based services on the blockchain to add more utility to your NFTs
