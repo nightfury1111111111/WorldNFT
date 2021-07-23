@@ -11,6 +11,7 @@ ONE World is a collectible NFT marketplace for real-world locations on planet Ea
 5. Can withdraw a bid
 6. Transfer ownership of NFT and ONE tokens between the highest bid winner and the auction owner
 7. See bid logs of auction
+8. Saves SVG image directly on blockchain for each NFT
 
 **Demo Instructions**
 
