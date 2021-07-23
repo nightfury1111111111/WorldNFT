@@ -45,7 +45,7 @@ export default function NftDetail() {
 
   const getCompressed = (addr) => {
     const len = addr.length;
-    return addr.substring(0, 6) + "..." + addr.substring(len - 5, len - 1);
+    return addr.substring(0, 6) + "..." + addr.substring(len - 5, len);
   };
 
   useEffect(() => {
@@ -56,6 +56,7 @@ export default function NftDetail() {
   const getNftByTokenId = async (id) => {
     const nft = await contract.methods.getTokenDetails(id).call();
     const owner = await contract.methods.getOwnerOf(id).call();
+    console.log("owner ", owner);
     let owner_fmt = getCompressed(owner);
     let price = await contract.methods.getPriceOf(id).call();
     //For ETH
@@ -64,6 +65,8 @@ export default function NftDetail() {
     price = fromWei(price, Units.one);
 
     const isNftOwned = owner == store.getStore().account ? true : false;
+    const mintFreshNft =
+      owner == "0x099E4E5Bb2b01a80A49D237317b2d868658C2Fd4" ? true : false;
     let auctionObj = await contract.methods.getAuctionInfo(id).call();
     let locn_nft = {
       token_id: id,
@@ -73,6 +76,7 @@ export default function NftDetail() {
       svg_image: nft.svg_image,
       price: price,
       isNftOwned: isNftOwned,
+      mintFreshNft: mintFreshNft,
       hasAuctionStarted: auctionObj.isExist,
     };
     return locn_nft;
@@ -877,6 +881,7 @@ export default function NftDetail() {
                         )}
 
                       {!nftObj.isNftOwned &&
+                        !nftObj.mintFreshNft &&
                         !nftObj.hasAuctionStarted &&
                         !auctionObj && <AuctionNot />}
                       {nftObj.hasAuctionStarted &&
@@ -890,6 +895,9 @@ export default function NftDetail() {
                       className="flex justify-start items-center"
                       style={{ height: "18%" }}
                     >
+                      {!nftObj.isNftOwned && nftObj.mintFreshNft && (
+                        <BuyNftBtn />
+                      )}
                       {!nftObj.isNftOwned &&
                         nftObj.hasAuctionStarted &&
                         auctionObj &&

@@ -141,6 +141,10 @@ class Store {
   configureHarmonyMetamask = async () => {
     // @ts-ignore
     // this.signInMetamask();
+    if (!window.web3) {
+      window.alert("No metamask found! Please install!");
+      return;
+    }
     const web3 = new Web3(window.web3.currentProvider);
     const accounts = await web3.eth.getAccounts();
     // console.log(accounts);

@@ -8,7 +8,7 @@ import {
   useRouteMatch,
 } from "react-router-dom";
 
-import Marketplace from "./Marketplace";
+import { country_icon_svg, city_icon_svg, landmark_icon_svg } from "./icons";
 
 export default function Home() {
   let { path, url } = useRouteMatch();
@@ -86,13 +86,15 @@ export default function Home() {
                 style={{
                   width: "300px",
                   height: "250px",
-                  boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
+                  boxShadow: "0px 2px 4px rgba(255, 0, 0, 0.25)",
                 }}
               >
                 <div
                   className="bg-purple-400 m-2 mb-0"
                   style={{ height: "80%" }}
-                ></div>
+                >
+                  {country_icon_svg}
+                </div>
                 <div className="flex justify-center" style={{ height: "20%" }}>
                   <span
                     className="text-xl self-center"
@@ -108,18 +110,21 @@ export default function Home() {
                   </span>
                 </div>
               </div>
-              <div
+              <Link
+                to={`/market`}
                 className="rounded-lg flex flex-col cursor-pointer"
                 style={{
                   width: "300px",
                   height: "250px",
-                  boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
+                  boxShadow: "0px 4px 4px rgba(0, 255, 0, 0.25)",
                 }}
               >
                 <div
                   className="bg-purple-400 m-2 mb-0"
                   style={{ height: "80%" }}
-                ></div>
+                >
+                  {city_icon_svg}
+                </div>
                 <div className="flex justify-center" style={{ height: "20%" }}>
                   <span
                     className="text-xl self-center"
@@ -134,19 +139,21 @@ export default function Home() {
                     CITY
                   </span>
                 </div>
-              </div>
+              </Link>
               <div
                 className="rounded-lg flex flex-col cursor-pointer"
                 style={{
                   width: "300px",
                   height: "250px",
-                  boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
+                  boxShadow: "0px 2px 4px rgba(255, 0, 0, 0.25)",
                 }}
               >
                 <div
                   className="bg-purple-400 m-2 mb-0"
                   style={{ height: "80%" }}
-                ></div>
+                >
+                  {landmark_icon_svg}
+                </div>
                 <div className="flex justify-center" style={{ height: "20%" }}>
                   <span
                     className="text-xl self-center"
