@@ -26,6 +26,8 @@ ONE World is a collectible NFT marketplace for real-world locations on planet Ea
 - Once the auction end, click "End Auction" to transfer the NFT and receive bid amount added to your wallet.
 - If you see an NFT owned by others you want to buy, please place a bid higher than the current highest bid.
 
+**Local setup using Truffle**
+
 Config:
 
 - Add .env file inside truffle.
@@ -66,3 +68,6 @@ Run UI:
 
 6. Place bid
    ![Bids](https://github.com/swapp1990/WorldNFT/blob/master/screenshot/nft6.JPG?raw=true)
+   
+** Future Mockup **
+![Map](https://github.com/swapp1990/WorldNFT/blob/master/screenshot/map1.JPG?raw=true)
