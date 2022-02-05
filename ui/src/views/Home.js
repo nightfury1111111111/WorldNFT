@@ -77,7 +77,7 @@ export default function Home() {
           <hr />
           <div className="flex flex-col">
             <div className="px-8 mt-4 flex justify-center">
-              <span class="text-4xl font-semibold">Browse By</span>
+              <span className="text-4xl font-semibold">Browse By</span>
             </div>
 
             <div className="px-8 mt-4 flex flex-row w-100 justify-center space-x-8">

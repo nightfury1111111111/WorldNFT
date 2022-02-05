@@ -88,22 +88,22 @@ class Store {
     const dapp_contract = new web3.eth.Contract(abi, contractAddress);
     store.setStore({ dapp_contract: dapp_contract });
   };
-  configureHarmonyOneWallet = async () => {
-    setTimeout(async () => {
-      if (window.onewallet && window.onewallet.isOneWallet) {
-        const onewallet = window.onewallet;
-        const getAccount = await onewallet.getAccount();
-        console.log("onewallet ", getAccount);
-        store.setStore({ account: getAccount.address });
-        const abi = WorldNFT.abi;
-        const contractAddress = WorldNFT.networks["2"].address;
-        console.log("WorldNFT contract", contractAddress);
-        const contract = hmy.contracts.createContract(abi, contractAddress);
-        console.log(contract.methods);
-        store.setStore({ dapp_contract: contract });
-      }
-    }, 1000);
-  };
+  // configureHarmonyOneWallet = async () => {
+  //   setTimeout(async () => {
+  //     if (window.onewallet && window.onewallet.isOneWallet) {
+  //       const onewallet = window.onewallet;
+  //       const getAccount = await onewallet.getAccount();
+  //       console.log("onewallet ", getAccount);
+  //       store.setStore({ account: getAccount.address });
+  //       const abi = WorldNFT.abi;
+  //       const contractAddress = WorldNFT.networks["2"].address;
+  //       console.log("WorldNFT contract", contractAddress);
+  //       const contract = hmy.contracts.createContract(abi, contractAddress);
+  //       console.log(contract.methods);
+  //       store.setStore({ dapp_contract: contract });
+  //     }
+  //   }, 1000);
+  // };
 
   signInMetamask = async () => {
     const provider = await detectEthereumProvider();
@@ -115,7 +115,66 @@ class Store {
       return;
     }
     console.log("metamask found");
+    console.log("provider",provider);
+
+
+    try{
+      await window.ethereum.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{chainId: '0x6357d2e0'}]
+      });
+      return true;
+    } catch (error) {
+      console.log('switch network error', error);
+      if (error.code === 4902) {
+        try {
+          await window.ethereum.request({
+            method: 'wallet_addEthereumChain',
+            params:  [
+              {
+                chainName: 'Harmony Testnet',
+                nativeCurrency: { name: 'ONE', symbol: 'ONE', decimals: 18 },
+                chainId: '0x' + Number(1666700000).toString(16),
+                rpcUrls: [`https://api.s0.b.hmny.io`],
+                blockExplorerUrls: ['https://explorer.pops.one/'],
+              },
+            ],
+          });
+          return true;
+        } catch (addError) {
+          console.error('add network error', addError);
+          return false;
+        }
+      }
+      console.error('Failed to setup the network in Metamask:', error)
+      return false
+    }
     // provider.request({method: 'eth_requestAccounts'})
+    
+    // provider.request({
+    //   method: 'wallet_addEthereumChain',
+    //   params: [
+    //     {
+    //       chainId: '0x' + Number(1666700000).toString(16),
+    //       chainName: `Harmony Testnet`,
+    //       nativeCurrency: { name: 'ONE', symbol: 'ONE', decimals: 18 },
+    //       rpcUrls: [`https://api.s0.b.hmny.io`],
+    //       blockExplorerUrls: ['https://explorer.pops.one/'],
+    //     },
+    //   ],
+    // })
+    // .then((result) => {
+    //   console.log('result')
+    //   return result
+    // })
+    // .catch((error) => {
+    //   if (error.code === 4001) {
+    //     // EIP-1193 userRejectedRequest error
+    //     console.log("We can't encrypt anything without the key.");
+    //   } else {
+    //     console.error(error);
+    //   }
+    // });
   };
 
   sendTestTransaction = async (web3) => {
@@ -140,15 +199,19 @@ class Store {
 
   configureHarmonyMetamask = async () => {
     // @ts-ignore
-    // this.signInMetamask();
+    await this.signInMetamask();
     if (!window.web3) {
       window.alert("No metamask found! Please install!");
       return;
     }
     const web3 = new Web3(window.web3.currentProvider);
-    const accounts = await web3.eth.getAccounts();
-    // console.log(accounts);
+    var accounts = await web3.eth.getAccounts();
+    if(!accounts[0]) {
+      await window.ethereum.request({method: 'eth_requestAccounts'})
+      accounts = await web3.eth.getAccounts();
+    }
     store.setStore({ account: accounts[0] });
+    console.log("aaaa",accounts)
     // this.sendTestTransaction(web3);
     const contractAddress = WorldNFT.networks["2"].address;
     console.log("WorldNFT contract", contractAddress);

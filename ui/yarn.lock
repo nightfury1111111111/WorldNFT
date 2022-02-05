@@ -1714,7 +1714,7 @@
     "@harmony-js/transaction" "0.1.56"
     "@harmony-js/utils" "0.1.56"
 
-"@harmony-js/crypto@0.1.56":
+"@harmony-js/crypto@0.1.56", "@harmony-js/crypto@^0.1.55":
   version "0.1.56"
   resolved "https://registry.yarnpkg.com/@harmony-js/crypto/-/crypto-0.1.56.tgz#62bdd850de8b98df6049bd2c43e096113852287d"
   integrity sha512-JMOWte8d3HXO2b038MqQpZ6al6OHsB9aZTretuzijxwrOIOdPKu9sDNHhmyJhQTIOKqG2+gErlj9AclZbXGk5g==
@@ -1761,7 +1761,7 @@
     "@harmony-js/network" "0.1.56"
     "@harmony-js/utils" "0.1.56"
 
-"@harmony-js/utils@0.1.56":
+"@harmony-js/utils@0.1.56", "@harmony-js/utils@^0.1.55":
   version "0.1.56"
   resolved "https://registry.yarnpkg.com/@harmony-js/utils/-/utils-0.1.56.tgz#89d77d07989ecfb5679776917f2b78b7b698c854"
   integrity sha512-XoYYIMoK/mSxPkxFd25dY/wScIWWevoTrHoFdlFd8N7GWlilfdgQEF5vO+4BA6hyDJ4ryfdLnGc6W6Hz+5qs2A==
@@ -2072,6 +2072,11 @@
     "@babel/runtime" "^7.4.4"
     prop-types "^15.7.2"
     react-is "^16.8.0 || ^17.0.0"
+
+"@metamask/detect-provider@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@metamask/detect-provider/-/detect-provider-1.2.0.tgz#3667a7531f2a682e3c3a43eaf3a1958bdb42a696"
+  integrity sha512-ocA76vt+8D0thgXZ7LxFPyqw3H7988qblgzddTDA6B8a/yU0uKV42QR/DhA+Jh11rJjxW0jKvwb5htA6krNZDQ==
 
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
@@ -11644,6 +11649,11 @@ react-error-overlay@^6.0.9:
   version "6.0.9"
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-6.0.9.tgz#3c743010c9359608c375ecd6bc76f35d93995b0a"
   integrity sha512-nQTTcUu+ATDbrSD1BZHr5kgSD4oF8OFjxun8uAaL8RwPBacGBNPf/yAuVVdx17N8XNzRDMrZ9XcKZHCjPW+9ew==
+
+react-iconly@^2.2.2:
+  version "2.2.5"
+  resolved "https://registry.yarnpkg.com/react-iconly/-/react-iconly-2.2.5.tgz#32b9a1d66815ae6a421026694e7d16027248d87f"
+  integrity sha512-c9WO/2TJltmyCVGj+/mdJZFoldfzYA8uUPmcml03D6YlBVWsCN5gq5Vb2k95qmeg+vSqMRvC69yghZvM0T4lKQ==
 
 react-is@^16.13.1, react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.1:
   version "16.13.1"

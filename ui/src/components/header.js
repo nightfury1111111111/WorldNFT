@@ -29,7 +29,7 @@ class Header extends Component {
   //   }
 
   async componentWillMount() {
-    // console.log("Header ", this.props);
+    console.log("Header ", this.props);
     const storeUpdated = async () => {
       let accountAddress = store.getStore().account;
       if (accountAddress) {
@@ -49,7 +49,7 @@ class Header extends Component {
       <nav
         className={"flex items-center justify-between flex-wrap p-2 myHeader"}
       >
-        <div class="flex flex-row items-center mr-6">
+        <div className="flex flex-row items-center mr-6">
           <svg
             width="190"
             height="52"
@@ -68,12 +68,11 @@ class Header extends Component {
           </svg>
         </div>
         <div className="flex flex-row">
-          {this.state.accountFmt && (
-            <span className="p-2 font-bold text-white">
+          {this.state.accountFmt?  (
+            <span className="p-2 font-bold text-white" >
               {this.state.accountFmt}
             </span>
-          )}
-          {!this.state.accountFmt && (
+          ):(
             <span className="p-2 font-bold text-white">
               No account detected!
             </span>
@@ -83,7 +82,7 @@ class Header extends Component {
           </Link>
           <Link
             to={`/about`}
-            class="p-2 lg:px-4 md:mx-2 text-white rounded hover:bg-gray-200 hover:text-gray-700 transition-colors duration-300"
+            className="p-2 lg:px-4 md:mx-2 text-white rounded hover:bg-gray-200 hover:text-gray-700 transition-colors duration-300"
           >
             About
           </Link>
