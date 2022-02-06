@@ -707,12 +707,12 @@ export default function NftDetail() {
       <div className="ml-8" style={{ height: "97%" }}>
         {nftObj && (
           <>
-            <div className="" style={{ height: "45%" }}>
+            <div className="">
               <div
-                className="ml-8 mr-8 mt-4 flex flex-row"
+                className="ml-8 mr-8 mt-4 flex flex-row mainintro"
                 style={{ height: "100%" }}
               >
-                <div className="" style={{ width: "40%" }}>
+                <div className="nftpic">
                   <div
                     className="flex justify-center items-center cursor-pointer rounded-lg"
                     style={{
@@ -729,11 +729,11 @@ export default function NftDetail() {
                     )}
                   </div>
                 </div>
-                <div className="flex flex-col pl-4" style={{ width: "60%" }}>
+                <div className="flex flex-col pl-4 nftinfo">
                   <div className="" style={{ minWidth: "50%", height: "100%" }}>
                     <div
                       className="flex justify-between"
-                      style={{ height: "10%" }}
+                      style={{ height: "10%", marginBottom: "20px"}}
                     >
                       <div className="ml-2">
                         <span
@@ -767,7 +767,7 @@ export default function NftDetail() {
                     </div>
                     <div
                       className="flex justify-between mt-2"
-                      style={{ height: "8%" }}
+                      style={{ height: "8%", marginBottom: "10px" }}
                     >
                       <div className="ml-2">
                         <span
@@ -956,12 +956,10 @@ export default function NftDetail() {
               </div>
             </div>
             <div
-              className="flex flex-row p-4"
-              style={{ height: "55%", width: "100%" }}
+              className="flex flex-row p-4 infos nftdetail"
             >
               <div
-                className="flex flex-col ml-2 mt-4 pr-12"
-                style={{ width: "55%", height: "100%" }}
+                className="flex flex-col ml-2 mt-4 pr-12 description"
               >
                 <span style={styles.entryLabel}>Mint Description:</span>
                 <span style={styles.entryDesc}>
@@ -986,8 +984,7 @@ export default function NftDetail() {
                 }}
               ></span>
               <div
-                className="mt-4 ml-4 pl-4"
-                style={{ width: "45%", height: "100%" }}
+                className="mt-4 ml-4 pl-4 bidinfo"
               >
                 <span style={styles.sectionLabel}>Bid Logs</span>
                 <BidsLog />

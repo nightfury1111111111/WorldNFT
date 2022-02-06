@@ -47,7 +47,7 @@ class Header extends Component {
   render() {
     return (
       <nav
-        className={"flex items-center justify-between flex-wrap p-2 myHeader"}
+        className={"flex items-center justify-between flex-wrap p-2 myHeader headerlayout"}
       >
         <div className="flex flex-row items-center mr-6">
           <svg
@@ -67,7 +67,7 @@ class Header extends Component {
             />
           </svg>
         </div>
-        <div className="flex flex-row">
+        <div className="flex flex-row headerinfo">
           {this.state.accountFmt?  (
             <span className="p-2 font-bold text-white" >
               {this.state.accountFmt}

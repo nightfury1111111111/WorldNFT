@@ -143,34 +143,26 @@ export default function Marketplace() {
   };
 
   return (
-    <div className="flex flex-row home" style={{ height: "90vh" }}>
+    <div className="flex flex-row home marketlayout" style={{ height: "90vh" }}>
       <aside
-        className="sidebar"
-        style={{
-          backgroundColor: "rgba(196, 196, 196,0.2)",
-          width: "18%",
-        }}
+        className="sidebar filterbar"
       >
         <div className="sidebar-header flex py-4 px-2">
           <span
-            className="self-start"
+            className="self-start filtername"
             style={{
-              color: "#000000",
-              fontWeight: 600,
-              fontSize: "50px",
-              fontStyle: "normal",
-              lineHeight: "73px",
+              
             }}
           >
             Filter
           </span>
         </div>
-        <div className="sidebar-content">
-          <ul className="flex flex-col w-full">
+        <div className="sidebar-content filtercontent">
+          <ul className="flex flex-col w-full filteritem">
             <li>
               <a
                 href="#"
-                className="flex flex-row justify-between items-center rounded-lg h-20 px-3 "
+                className="flex flex-row justify-between items-center rounded-lg h-20 px-3 eachfilter"
               >
                 <span style={Styles.filterOption}>Categories</span>
                 <Iconly
@@ -193,7 +185,7 @@ export default function Marketplace() {
             <li className="my-px">
               <a
                 href="#"
-                className="flex flex-row justify-between items-center rounded-lg h-20 px-3 "
+                className="flex flex-row justify-between items-center rounded-lg h-20 px-3 eachfilter"
               >
                 <span style={Styles.filterOption}>Price</span>
                 <Iconly
@@ -216,7 +208,7 @@ export default function Marketplace() {
             <li>
               <a
                 href="#"
-                className="flex flex-row justify-between  items-center rounded-lg h-20 px-3 "
+                className="flex flex-row justify-between  items-center rounded-lg h-20 px-3 eachfilter"
               >
                 <span style={Styles.filterOption}>Status</span>
                 <Iconly
@@ -240,7 +232,7 @@ export default function Marketplace() {
         </div>
       </aside>
       <main className="main flex flex-col flex-grow">
-        <header className="header bg-white shadow py-4 px-4">
+        <header className="header bg-white shadow py-4 px-4 secondfilter">
           {/* NFTs minted: {nftCount} */}
           <div className="flex justify-between">
             <div>
@@ -274,16 +266,11 @@ export default function Marketplace() {
           <div className="w-full p-6">
             {loading && <span>Loading ...</span>}
             {!loading && (
-              <div className="grid grid-cols-3 gap-4">
+              <div className="grid grid-cols-3 gap-4 nftcontent">
                 {nftList.map((nft, idx) => {
                   return (
                     <div
-                      className="w-full flex flex-col items-center justify-center rounded-lg cursor-pointer hover:shadow-md h-full"
-                      style={{
-                        width: "350px",
-                        height: "370px",
-                        boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
-                      }}
+                      className="w-full flex flex-col items-center justify-center rounded-lg cursor-pointer hover:shadow-md h-full nftitem"
                       onClick={() => routeToDetail(nft.tokenId)}
                       key={idx}
                     >

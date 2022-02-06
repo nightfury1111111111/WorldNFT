@@ -12,7 +12,6 @@ import { country_icon_svg, city_icon_svg, landmark_icon_svg } from "./icons";
 
 export default function Home() {
   let { path, url } = useRouteMatch();
-
   return (
     <>
       {/* <Marketplace /> */}
@@ -21,23 +20,15 @@ export default function Home() {
           src="https://static.overlay-tech.com/assets/eeb0c8c9-6927-4067-ba89-cc331844f560.svg"
           width="800px"
           height="600px"
-          style={{
-            position: "absolute",
-            right: "10%",
-
-            top: "100px",
-          }}
+          className="map"
         ></img>
         <div className="flex flex-col">
           <div
-            className="flex flex-col m-4 mt-12"
-            style={{
-              height: "400px",
-            }}
+            className="flex flex-col m-4 mt-12 banner"
           >
-            <div style={{ position: "absolute", top: "300px", left: "50px" }}>
+            <div className="earthsvg">
               <svg
-                width="450"
+                width="300"
                 height="208"
                 viewBox="0 0 907 208"
                 fill="none"
@@ -58,6 +49,7 @@ export default function Home() {
                 background: "#FFFFFF",
                 boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
                 borderRadius: "90px",
+                zIndex: 10,
               }}
             >
               <span
@@ -80,9 +72,9 @@ export default function Home() {
               <span className="text-4xl font-semibold">Browse By</span>
             </div>
 
-            <div className="px-8 mt-4 flex flex-row w-100 justify-center space-x-8">
+            <div className="px-8 mt-4 flex flex-row w-100 justify-center space-x-8 nftmenu">
               <div
-                className="rounded-lg flex flex-col cursor-pointer"
+                className="rounded-lg flex flex-col cursor-pointer nftitem"
                 style={{
                   width: "300px",
                   height: "250px",
@@ -112,12 +104,7 @@ export default function Home() {
               </div>
               <Link
                 to={`/market`}
-                className="rounded-lg flex flex-col cursor-pointer"
-                style={{
-                  width: "300px",
-                  height: "250px",
-                  boxShadow: "0px 4px 4px rgba(0, 255, 0, 0.25)",
-                }}
+                className="rounded-lg flex flex-col cursor-pointer nftitems"
               >
                 <div
                   className="bg-purple-400 m-2 mb-0"
