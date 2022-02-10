@@ -47,10 +47,12 @@ class Header extends Component {
   render() {
     return (
       <nav
-        className={"flex items-center justify-between flex-wrap p-2 myHeader headerlayout"}
+        className={
+          "flex items-center justify-between flex-wrap p-2 myHeader headerlayout"
+        }
       >
-        <div className="flex flex-row items-center mr-6">
-          <svg
+        <div className="flex flex-row items-center mr-6 logoContent">
+          {/* <svg
             width="190"
             height="52"
             viewBox="0 0 190 52"
@@ -65,14 +67,19 @@ class Header extends Component {
               d="M128.648 10.9V41H121.639L108.352 24.961V41H100.01V10.9H107.019L120.306 26.939V10.9H128.648ZM143.168 17.479V24.101H156.455V30.68H143.168V41H134.654V10.9H158.261V17.479H143.168ZM168.859 17.651H159.614V10.9H186.575V17.651H177.373V41H168.859V17.651Z"
               fill="white"
             />
-          </svg>
+          </svg> */}
+          <div className="logopart2">
+            <div>LUV</div>
+            <div>NFT</div>
+          </div>
+          <div className="logopart1">ESTATE</div>
         </div>
         <div className="flex flex-row headerinfo">
-          {this.state.accountFmt?  (
-            <span className="p-2 font-bold text-white" >
+          {this.state.accountFmt ? (
+            <span className="p-2 font-bold text-white">
               {this.state.accountFmt}
             </span>
-          ):(
+          ) : (
             <span className="p-2 font-bold text-white">
               No account detected!
             </span>

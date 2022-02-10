@@ -12,7 +12,7 @@
   width: 100%;
 }
 
-@media only screen and (max-width: 850px){
+@media only screen and (max-width: 850px) {
   .nftmenu {
     /* display: flex;
     flex-direction: column;
@@ -24,30 +24,34 @@
 }
 
 .nftitems {
-    width: 300px;
-    height: 250px;
-    box-shadow: 0px 4px 4px rgba(0, 255, 0, 0.25);
-    margin-left: 0;
+  width: 300px;
+  height: 250px;
+  box-shadow: 0px 4px 4px rgba(0, 255, 0, 0.25);
+  margin-left: 0;
 }
 
 @media only screen and (max-width: 850px) {
-  .nftitems{
+  .nftitems {
     margin-left: 0px;
   }
 }
 
 .earthsvg {
-  position: absolute; 
-  top: 300px; 
-  left: 50px;
+  width: 90%;
+  position: absolute;
+  top: 360px;
+  margin-left: 50px;
+  color: #dc1fff;
+  font-family: "Archivo Black";
 }
 
 @media only screen and (max-width: 650px) {
   .earthsvg {
-    position: absolute; 
+    position: absolute;
     text-align: center;
-    top: 300px; 
-    left: 20px;
+    top: 300px;
+    margin-left: 0;
+    /* left: 20px; */
   }
 }
 
@@ -60,9 +64,9 @@
 }
 
 .nftitem {
-    width: 350px;
-    height: 370px;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  width: 350px;
+  height: 370px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 @media only screen and (max-width: 650px) {
@@ -80,7 +84,7 @@
 }
 
 .filterbar {
-  background-color: rgba(196, 196, 196,0.);
+  background-color: rgba(196, 196, 196, 0);
   width: 18%;
   display: flex;
   flex-direction: column;
@@ -88,7 +92,7 @@
 
 @media only screen and (max-width: 650px) {
   .filterbar {
-    background-color: rgba(196, 196, 196,0.);
+    background-color: rgba(196, 196, 196, 0);
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -122,9 +126,9 @@
 
 @media only screen and (max-width: 650px) {
   .filtername {
-  font-size: 30px;
-  line-height: 30px;
-  font-weight: 500;
+    font-size: 30px;
+    line-height: 30px;
+    font-weight: 500;
   }
 }
 
@@ -156,7 +160,6 @@
 
 @media only screen and (max-width: 650px) {
   .infos {
-    
   }
 }
 
@@ -219,11 +222,11 @@
 }
 
 .map {
-    position: absolute;
-    right: 10%;
-    top: 120px;
-  }
-  
+  position: absolute;
+  right: 10%;
+  top: 120px;
+}
+
 @media only screen and (max-width: 650px) {
   .map {
     position: absolute;
@@ -235,6 +238,10 @@
 .headerlayout {
   display: flex;
   flex-direction: row;
+}
+
+.headerinfo {
+  font-family: Poppins;
 }
 
 @media only screen and (max-width: 650px) {

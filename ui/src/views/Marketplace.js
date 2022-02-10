@@ -52,7 +52,6 @@ export default function Marketplace() {
     let contract = store.getStore().dapp_contract;
     if (contract) {
       let nftCount = await contract.methods.nextId().call();
-      console.log("nftCount", nftCount);
       setNftCount(nftCount);
       let tmpList = [];
       //test_nft
@@ -72,6 +71,7 @@ export default function Marketplace() {
         let price = await contract.methods.getPriceOf(i).call();
         //For ETH
         // price = window.web3.utils.fromWei(price);
+        console.log("owner", owner);
         price = fromWei(price, Units.one);
         const isNftOwned = owner == store.getStore().account ? true : false;
         let nftObj = {
@@ -79,6 +79,7 @@ export default function Marketplace() {
           name: nft.location_name,
           svg_image: nft.svg_image,
           price: price,
+          owner: owner,
           isNftOwned: isNftOwned,
         };
         tmpList.push(nftObj);
@@ -144,16 +145,9 @@ export default function Marketplace() {
 
   return (
     <div className="flex flex-row home marketlayout" style={{ height: "90vh" }}>
-      <aside
-        className="sidebar filterbar"
-      >
+      <aside className="sidebar filterbar">
         <div className="sidebar-header flex py-4 px-2">
-          <span
-            className="self-start filtername"
-            style={{
-              
-            }}
-          >
+          <span className="self-start filtername" style={{}}>
             Filter
           </span>
         </div>
@@ -302,12 +296,13 @@ export default function Marketplace() {
                         }}
                       >
                         <div className="ml-2 flex flex-row">
-                          <Iconly
+                          {/* <Iconly
                             name="Heart2"
                             set="two-tone"
                             primaryColor="black"
                             size="medium"
-                          />
+                          /> */}
+                          💜
                           <span
                             style={{
                               color: "#828282",
@@ -340,13 +335,14 @@ export default function Marketplace() {
                         className="flex justify-between w-full"
                         style={{
                           height: "10%",
+                          fontFamily: "Poppins",
                         }}
                       >
                         <div className="ml-2">
                           <span
                             className="uppercase"
                             style={{
-                              color: "#FFCA0E",
+                              color: "#DC1FFF",
                               fontWeight: 600,
                               fontSize: "21px",
                               fontStyle: "normal",
@@ -360,7 +356,7 @@ export default function Marketplace() {
                           <span
                             className="uppercase"
                             style={{
-                              color: "#FFCA0E",
+                              color: "#00FFA3",
                               fontWeight: 600,
                               fontSize: "21px",
                               fontStyle: "normal",
@@ -372,7 +368,7 @@ export default function Marketplace() {
                           <span
                             className="uppercase"
                             style={{
-                              color: "#FFCA0E",
+                              color: "#00FFA3",
                               fontWeight: 600,
                               fontSize: "20px",
                               fontStyle: "normal",
@@ -403,6 +399,18 @@ export default function Marketplace() {
                           >
                             Owned by
                           </span>
+                          {/* <span
+                            className="uppercase"
+                            style={{
+                              color: "#00FFA3",
+                              fontWeight: 600,
+                              fontSize: "21px",
+                              fontStyle: "normal",
+                              lineHeight: "28px",
+                            }}
+                          >
+                            {nft.owner}&nbsp;
+                          </span> */}
                         </div>
                       </div>
                     </div>

@@ -21,3 +21,26 @@
   width: 10px;
   line-height: 1;
 }
+
+.logoContent {
+  color: white;
+  /* display: flex;
+  flex-direction: row;
+  justify-content: space-between; */
+  font-family: "Archivo Black";
+  margin-left: 20px;
+  line-height: 1;
+}
+
+.logopart1 {
+  /* height: 45px; */
+  font-size: 45px;
+  font-weight: 600;
+  margin-left: 10px;
+}
+
+.logopart2 {
+  text-align: right;
+  font-size: 22px;
+  font-weight: 600;
+}
