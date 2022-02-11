@@ -1,3 +1,4 @@
 truffle/node_modules/
 truffle/.env
 ui/node_modules/
+ui/build/
