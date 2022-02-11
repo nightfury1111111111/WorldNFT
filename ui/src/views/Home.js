@@ -32,14 +32,14 @@ export default function Home() {
               <div style={{ fontSize: "30px" }}>THE METAVERSE</div>
             </div>
           </div>
-          <div className="flex justify-start mb-2">
+          <div className="flex justify-start mb-2 ml-8">
             <Link
               to={`/market`}
-              className="rounded p-4 mr-2 ml-8 mb-2"
+              className="rounded p-3 mr-2 ml-10 mb-2"
               style={{
                 background: "#000000",
                 boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
-                borderRadius: "90px",
+                borderRadius: "20px",
                 zIndex: 10,
               }}
             >
@@ -51,104 +51,192 @@ export default function Home() {
                   fontWeight: 900,
                   fontStyle: "normal",
                   lineHeight: "96%",
+                  fontSize: "45px",
                 }}
               >
-                EXPLORE
+                🗺
               </span>
             </Link>
           </div>
           <hr />
           <div className="flex flex-col">
             <div className="px-8 mt-4 flex justify-center">
-              <span className="text-4xl font-semibold">Browse By</span>
+              <span
+                className="text-4xl font-semibold"
+                style={{ fontFamily: "Archivo Black" }}
+              >
+                👀 BY
+              </span>
             </div>
 
-            <div className="px-8 mt-4 flex flex-row w-100 justify-center space-x-8 nftmenu">
-              <div
-                className="rounded-lg flex flex-col cursor-pointer nftitem"
-                style={{
-                  width: "300px",
-                  height: "250px",
-                  boxShadow: "0px 2px 4px rgba(255, 0, 0, 0.25)",
-                }}
-              >
+            <div className="px-8 mt-4 mb-5 flex flex-row w-100 justify-center space-x-8 nftmenu">
+              <div style={{ display: "flex", marginBottom: "18px" }}>
                 <div
-                  className="bg-purple-400 m-2 mb-0"
+                  className="rounded-lg flex flex-col cursor-pointer nftitem"
                   style={{
-                    height: "80%",
-                    backgroundImage: `url(${countryPic})`,
+                    width: "300px",
+                    height: "250px",
+                    boxShadow: "0px 2px 4px rgba(255, 0, 0, 0.25)",
                   }}
                 >
-                  {country_icon_svg}
-                  {/* <img src={countryPic} /> */}
-                </div>
-                <div className="flex justify-center" style={{ height: "20%" }}>
-                  <span
-                    className="text-xl self-center"
+                  <div
+                    className="bg-purple-400 m-2 mb-0"
                     style={{
-                      color: "#FFCA0E",
-                      fontFamily: "Montserrat",
-                      fontWeight: 900,
-                      fontStyle: "normal",
-                      lineHeight: "96%",
+                      height: "80%",
+                      backgroundImage: `url(${countryPic})`,
                     }}
                   >
-                    COUNTRY
-                  </span>
+                    {country_icon_svg}
+                    {/* <img src={countryPic} /> */}
+                  </div>
+                  <div
+                    className="flex justify-center"
+                    style={{ height: "20%" }}
+                  >
+                    <span
+                      className="text-xl self-center"
+                      style={{
+                        color: "#FFCA0E",
+                        fontFamily: "Montserrat",
+                        fontWeight: 900,
+                        fontStyle: "normal",
+                        lineHeight: "96%",
+                        fontSize: "30px",
+                      }}
+                    >
+                      🏠
+                    </span>
+                  </div>
+                </div>
+                <Link
+                  to={`/market`}
+                  className="rounded-lg flex flex-col cursor-pointer nftitems"
+                >
+                  <div
+                    className="bg-purple-400 m-2 mb-0"
+                    style={{ height: "80%" }}
+                  >
+                    {city_icon_svg}
+                  </div>
+                  <div
+                    className="flex justify-center"
+                    style={{ height: "20%" }}
+                  >
+                    <span
+                      className="text-xl self-center"
+                      style={{
+                        color: "#FFCA0E",
+                        fontFamily: "Montserrat",
+                        fontWeight: 900,
+                        fontStyle: "normal",
+                        lineHeight: "96%",
+                        fontSize: "30px",
+                      }}
+                    >
+                      🏩
+                    </span>
+                  </div>
+                </Link>
+                <div
+                  className="rounded-lg flex flex-col cursor-pointer"
+                  style={{
+                    width: "300px",
+                    height: "250px",
+                    boxShadow: "0px 2px 4px rgba(255, 0, 0, 0.25)",
+                  }}
+                >
+                  <div
+                    className="bg-purple-400 m-2 mb-0"
+                    style={{ height: "80%" }}
+                  >
+                    {landmark_icon_svg}
+                  </div>
+                  <div
+                    className="flex justify-center"
+                    style={{ height: "20%" }}
+                  >
+                    <span
+                      className="text-xl self-center"
+                      style={{
+                        color: "#FFCA0E",
+                        fontFamily: "Montserrat",
+                        fontWeight: 900,
+                        fontStyle: "normal",
+                        lineHeight: "96%",
+                        fontSize: "30px",
+                      }}
+                    >
+                      🗽
+                    </span>
+                  </div>
                 </div>
               </div>
-              <Link
-                to={`/market`}
-                className="rounded-lg flex flex-col cursor-pointer nftitems"
-              >
+              <div style={{ display: "flex" }}>
                 <div
-                  className="bg-purple-400 m-2 mb-0"
-                  style={{ height: "80%" }}
+                  className="rounded-lg flex flex-col cursor-pointer"
+                  style={{
+                    width: "300px",
+                    height: "250px",
+                    boxShadow: "0px 2px 4px rgba(255, 0, 0, 0.25)",
+                  }}
                 >
-                  {city_icon_svg}
-                </div>
-                <div className="flex justify-center" style={{ height: "20%" }}>
-                  <span
-                    className="text-xl self-center"
-                    style={{
-                      color: "#FFCA0E",
-                      fontFamily: "Montserrat",
-                      fontWeight: 900,
-                      fontStyle: "normal",
-                      lineHeight: "96%",
-                    }}
+                  <div
+                    className="bg-purple-400 m-2 mb-0"
+                    style={{ height: "80%" }}
                   >
-                    CITY
-                  </span>
+                    {landmark_icon_svg}
+                  </div>
+                  <div
+                    className="flex justify-center"
+                    style={{ height: "20%" }}
+                  >
+                    <span
+                      className="text-xl self-center"
+                      style={{
+                        color: "#FFCA0E",
+                        fontFamily: "Montserrat",
+                        fontWeight: 900,
+                        fontStyle: "normal",
+                        lineHeight: "96%",
+                        fontSize: "30px",
+                      }}
+                    >
+                      🏬
+                    </span>
+                  </div>
                 </div>
-              </Link>
-              <div
-                className="rounded-lg flex flex-col cursor-pointer"
-                style={{
-                  width: "300px",
-                  height: "250px",
-                  boxShadow: "0px 2px 4px rgba(255, 0, 0, 0.25)",
-                }}
-              >
                 <div
-                  className="bg-purple-400 m-2 mb-0"
-                  style={{ height: "80%" }}
+                  className="rounded-lg flex flex-col cursor-pointer"
+                  style={{
+                    width: "300px",
+                    height: "250px",
+                    boxShadow: "0px 2px 4px rgba(255, 0, 0, 0.25)",
+                  }}
                 >
-                  {landmark_icon_svg}
-                </div>
-                <div className="flex justify-center" style={{ height: "20%" }}>
-                  <span
-                    className="text-xl self-center"
-                    style={{
-                      color: "#FFCA0E",
-                      fontFamily: "Montserrat",
-                      fontWeight: 900,
-                      fontStyle: "normal",
-                      lineHeight: "96%",
-                    }}
+                  <div
+                    className="bg-purple-400 m-2 mb-0"
+                    style={{ height: "80%" }}
                   >
-                    LANDMARK
-                  </span>
+                    {landmark_icon_svg}
+                  </div>
+                  <div
+                    className="flex justify-center"
+                    style={{ height: "20%" }}
+                  >
+                    <span
+                      className="text-xl self-center"
+                      style={{
+                        color: "#FFCA0E",
+                        fontFamily: "Montserrat",
+                        fontWeight: 900,
+                        fontStyle: "normal",
+                        lineHeight: "96%",
+                        fontSize: "30px",
+                      }}
+                    >
+                      🏟
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>

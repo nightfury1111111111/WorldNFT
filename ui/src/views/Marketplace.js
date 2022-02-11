@@ -118,7 +118,6 @@ export default function Marketplace() {
  </svg>`;
 
   const routeToDetail = (id) => {
-    console.log("click ", id);
     route_history.push("/nft/" + id);
   };
 
@@ -403,7 +402,7 @@ export default function Marketplace() {
                               lineHeight: "22px",
                             }}
                           >
-                            Owned by
+                            Longitude
                           </span>
                           {/* <span
                             className="uppercase"
@@ -417,6 +416,27 @@ export default function Marketplace() {
                           >
                             {nft.owner}&nbsp;
                           </span> */}
+                        </div>
+                      </div>
+                      <div
+                        className="flex justify-between w-full mt-2"
+                        style={{
+                          height: "10%",
+                        }}
+                      >
+                        <div className="ml-2">
+                          <span
+                            style={{
+                              color: "#828282",
+                              fontFamily: "Montserrat",
+                              fontWeight: 600,
+                              fontSize: "18px",
+                              fontStyle: "normal",
+                              lineHeight: "22px",
+                            }}
+                          >
+                            Latitude
+                          </span>
                         </div>
                       </div>
                     </div>

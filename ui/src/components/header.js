@@ -59,26 +59,31 @@ class Header extends Component {
             <div>NFT</div>
           </div>
           <div className="logopart1">ESTATE</div> */}
-          <img src={logo} />
+          <img src={logo} style={{ height: "55px" }} />
         </div>
         <div className="flex flex-row headerinfo">
           {this.state.accountFmt ? (
-            <span className="p-2 font-bold text-white">
+            <span className="p-4 font-bold text-white">
               {this.state.accountFmt}
             </span>
           ) : (
-            <span className="p-2 font-bold text-white">
+            <span className="p-4 font-bold text-white">
               No account detected!
             </span>
           )}
-          <Link to={`/`} className="p-2 px-4 text-white rounded bg-indigo-600">
-            Home
+          <Link
+            to={`/`}
+            className="p-2 lg:px-2 md:mx-0 rounded hover:bg-gray-200 hover:text-gray-700 transition-colors duration-300"
+            style={{ fontSize: "25px" }}
+          >
+            🏠
           </Link>
           <Link
             to={`/about`}
-            className="p-2 lg:px-4 md:mx-2 text-white rounded hover:bg-gray-200 hover:text-gray-700 transition-colors duration-300"
+            className="p-2 lg:px-2 md:mx-0 rounded hover:bg-gray-200 hover:text-gray-700 transition-colors duration-300"
+            style={{ fontSize: "25px" }}
           >
-            About
+            🤔
           </Link>
         </div>
       </nav>
