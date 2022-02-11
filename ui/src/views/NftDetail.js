@@ -749,7 +749,11 @@ export default function NftDetail() {
                       </div>
                       <div
                         className="mr-2 flex flex-row"
-                        style={{ fontSize: "22px" }}
+                        style={{
+                          fontSize: "22px",
+                          color: "transparent",
+                          textShadow: "0 0 #DC1FFF",
+                        }}
                       >
                         <span
                           style={{

@@ -19,6 +19,7 @@ import Home from "views/Home.js";
 import About from "views/About.js";
 // import Market from "views/Market.js";
 import NftDetail from "views/NftDetail.js";
+import World from "views/World";
 
 import Store from "./stores/store";
 import Marketplace from "views/Marketplace";
@@ -48,6 +49,9 @@ function App() {
           </Route>
           <Route path="/nft/:id">
             <NftDetail />
+          </Route>
+          <Route path="/world">
+            <World />
           </Route>
         </Switch>
       </div>

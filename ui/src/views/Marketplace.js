@@ -295,7 +295,13 @@ export default function Marketplace() {
                           height: "10%",
                         }}
                       >
-                        <div className="ml-2 flex flex-row">
+                        <div
+                          className="ml-2 flex flex-row"
+                          style={{
+                            color: "transparent",
+                            textShadow: "0 0 #DC1FFF",
+                          }}
+                        >
                           {/* <Iconly
                             name="Heart2"
                             set="two-tone"
@@ -320,7 +326,7 @@ export default function Marketplace() {
                           <span
                             style={{
                               color: "#5D5D5D",
-                              fontFamily: "Montserrat",
+                              fontFamily: "Poppins",
                               fontWeight: 600,
                               fontSize: "20px",
                               fontStyle: "normal",
@@ -368,7 +374,7 @@ export default function Marketplace() {
                           <span
                             className="uppercase"
                             style={{
-                              color: "#00FFA3",
+                              color: "#DC1FFF",
                               fontWeight: 600,
                               fontSize: "20px",
                               fontStyle: "normal",

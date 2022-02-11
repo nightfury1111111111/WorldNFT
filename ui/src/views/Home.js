@@ -9,6 +9,9 @@ import {
 } from "react-router-dom";
 
 import { country_icon_svg, city_icon_svg, landmark_icon_svg } from "./icons";
+import countryPic from "../assets/img/country.png";
+import cityPic from "../assets/img/city.png";
+import landmarkPic from "../assets/img/landmark.png";
 
 export default function Home() {
   let { path, url } = useRouteMatch();
@@ -25,8 +28,8 @@ export default function Home() {
         <div className="flex flex-col">
           <div className="flex flex-col m-4 mt-12 banner">
             <div className="earthsvg">
-              <div style={{ fontSize: "28px" }}>OWN A PART OF</div>
-              <div style={{ fontSize: "38px" }}>THE METAVERSE</div>
+              <div style={{ fontSize: "30px" }}>OWN A PART OF</div>
+              <div style={{ fontSize: "30px" }}>THE METAVERSE</div>
             </div>
           </div>
           <div className="flex justify-start mb-2">
@@ -44,13 +47,13 @@ export default function Home() {
                 className="text-4xl"
                 style={{
                   color: "#FFFFFF",
-                  fontFamily: "Montserrat",
+                  fontFamily: "Archivo Black",
                   fontWeight: 900,
                   fontStyle: "normal",
                   lineHeight: "96%",
                 }}
               >
-                Explore
+                EXPLORE
               </span>
             </Link>
           </div>
@@ -71,9 +74,13 @@ export default function Home() {
               >
                 <div
                   className="bg-purple-400 m-2 mb-0"
-                  style={{ height: "80%" }}
+                  style={{
+                    height: "80%",
+                    backgroundImage: `url(${countryPic})`,
+                  }}
                 >
                   {country_icon_svg}
+                  {/* <img src={countryPic} /> */}
                 </div>
                 <div className="flex justify-center" style={{ height: "20%" }}>
                   <span
