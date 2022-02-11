@@ -59,7 +59,7 @@ class Header extends Component {
             <div>NFT</div>
           </div>
           <div className="logopart1">ESTATE</div> */}
-          <img src={logo} style={{ height: "55px" }} />
+          <img src={logo} />
         </div>
         <div className="flex flex-row headerinfo">
           {this.state.accountFmt ? (
